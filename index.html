@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SDVsolution — Requirements, done to the standard</title>
+<meta name="description" content="The requirements platform for software-defined vehicles. Author, trace, review and verify system, software and hardware requirements across the Automotive SPICE V — with a built-in ISO/IEC/IEEE 29148 quality gate." />
+<style>
+  :root{
+    --ink:#0F1B2D; --ink2:#1D2939; --panel:#12233b;
+    --text:#344054; --muted:#667085; --line:#E4E7EC;
+    --blue:#175CD3; --blue2:#0E7090; --violet:#7A5AF8; --green:#12B76A; --accent:#9CFF3A; --amber:#B54708;
+    --radius:14px; --max:1140px;
+    --font: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--font);color:var(--text);background:#fff;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;border-radius:10px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:.15s}
+  .btn-primary{background:var(--blue);color:#fff}
+  .btn-primary:hover{background:#134db3}
+  .btn-accent{background:var(--accent);color:var(--ink)}
+  .btn-accent:hover{filter:brightness(.95)}
+  .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.25)}
+  .btn-ghost:hover{border-color:rgba(255,255,255,.55)}
+  .btn-outline{background:#fff;color:var(--ink2);border-color:var(--line)}
+  .eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--blue2)}
+  h1,h2,h3{color:var(--ink);line-height:1.15;margin:0}
+  section{padding:76px 0}
+  .muted{color:var(--muted)}
+
+  /* header */
+  header{position:sticky;top:0;z-index:50;background:rgba(15,27,45,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.08)}
+  .nav{display:flex;align-items:center;gap:26px;height:64px}
+  .brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:800;font-size:18px}
+  .logo{width:26px;height:26px;border-radius:7px;background:var(--accent);display:flex;align-items:center;justify-content:center}
+  .navlinks{display:flex;gap:22px;margin-left:8px}
+  .navlinks a{color:#C9D3E0;font-size:14px;font-weight:600}
+  .navlinks a:hover{color:#fff}
+  .nav-cta{margin-left:auto;display:flex;align-items:center;gap:12px}
+  .nav-cta a.login{color:#C9D3E0;font-size:14px;font-weight:600}
+
+  /* hero */
+  .hero{background:radial-gradient(1200px 500px at 80% -10%, #1b3358 0%, var(--ink) 55%);color:#fff;padding:92px 0 84px}
+  .hero h1{color:#fff;font-size:52px;letter-spacing:-.02em}
+  .hero p.lead{color:#C9D3E0;font-size:19px;max-width:640px;margin:20px 0 28px}
+  .hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+  .hero .fineprint{color:#8CA0B8;font-size:13px;margin-top:16px}
+  .pill{display:inline-flex;gap:8px;align-items:center;background:rgba(156,255,58,.12);border:1px solid rgba(156,255,58,.35);color:#DDF7B8;font-size:12.5px;font-weight:700;padding:6px 12px;border-radius:999px;margin-bottom:22px}
+
+  /* dashboard mock */
+  .mock{margin-top:56px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 80px rgba(0,0,0,.45);background:#fff}
+  .mock .bar{display:flex;align-items:center;gap:8px;background:var(--ink2);padding:10px 14px}
+  .mock .bar b{color:#fff;font-size:13px;font-weight:800}
+  .mock .bar .dot{width:9px;height:9px;border-radius:9px;background:var(--accent)}
+  .mock .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line)}
+  .mcard{background:#fff;padding:16px}
+  .mcard .k{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--muted)}
+  .mcard .v{font-size:30px;font-weight:800;color:var(--ink);margin-top:4px}
+  .mcard .s{font-size:12px;color:var(--muted)}
+  .mbar{height:6px;border-radius:4px;background:#EAECF0;overflow:hidden;margin-top:10px}
+  .mbar i{display:block;height:100%}
+
+  /* logos / standards */
+  .standards{background:#0B1524;color:#93A4B8;padding:26px 0}
+  .standards .row{display:flex;flex-wrap:wrap;gap:14px 34px;align-items:center;justify-content:center}
+  .standards .row .lbl{font-size:12px;font-weight:700;letter-spacing:.06em;color:#7C8CA0}
+  .std{color:#CBD5E1;font-weight:800;font-size:15px;opacity:.9}
+
+  /* features */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .feat{border:1px solid var(--line);border-radius:var(--radius);padding:22px;background:#fff;transition:.15s}
+  .feat:hover{box-shadow:0 12px 30px rgba(16,24,40,.08);transform:translateY(-2px)}
+  .feat .ic{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px}
+  .feat h3{font-size:17px;margin-bottom:6px}
+  .feat p{font-size:14px;margin:0}
+
+  .center{text-align:center;max-width:720px;margin:0 auto 44px}
+  .center h2{font-size:36px;letter-spacing:-.01em}
+  .center p{font-size:17px;margin-top:12px}
+
+  /* flow */
+  .flow{background:#F7F9FC}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .step{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+  .step .n{width:28px;height:28px;border-radius:8px;background:var(--ink);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}
+  .step h3{font-size:16px;margin:12px 0 4px}
+  .step p{font-size:13.5px;margin:0}
+
+  /* pricing */
+  .prices{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;align-items:stretch}
+  .price{border:1px solid var(--line);border-radius:var(--radius);padding:24px;background:#fff;display:flex;flex-direction:column}
+  .price.pop{border-color:var(--blue);box-shadow:0 16px 40px rgba(23,92,211,.14);position:relative}
+  .price.pop .tag{position:absolute;top:-11px;left:24px;background:var(--blue);color:#fff;font-size:11px;font-weight:800;padding:3px 10px;border-radius:999px}
+  .price h3{font-size:18px}
+  .price .desc{font-size:13px;color:var(--muted);margin:6px 0 14px;min-height:34px}
+  .price .amt{font-size:34px;font-weight:800;color:var(--ink)}
+  .price .per{font-size:13px;color:var(--muted)}
+  .price ul{list-style:none;padding:0;margin:16px 0 20px;flex:1}
+  .price li{font-size:13.5px;padding:6px 0 6px 24px;position:relative;color:var(--text);border-top:1px solid #F2F4F7}
+  .price li:before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:800}
+  .price .btn{width:100%;justify-content:center}
+
+  /* CTA band */
+  .cta-band{background:linear-gradient(90deg,#12233b,#0F1B2D);color:#fff;border-radius:20px;padding:48px;text-align:center}
+  .cta-band h2{color:#fff;font-size:30px}
+  .cta-band p{color:#C9D3E0;max-width:560px;margin:12px auto 24px}
+
+  /* footer */
+  footer{background:#0B1524;color:#8CA0B8;padding:46px 0 30px;font-size:14px}
+  .fgrid{display:flex;gap:40px;flex-wrap:wrap;justify-content:space-between}
+  footer h4{color:#E6EDF5;font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin:0 0 10px}
+  footer a{display:block;color:#93A4B8;padding:4px 0}
+  footer a:hover{color:#fff}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,.08);margin-top:34px;padding-top:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:#6B7C90;font-size:12.5px}
+
+  /* demo form */
+  .demo-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:34px;align-items:center;text-align:left}
+  .demo-form{background:#fff;border-radius:14px;padding:22px}
+  .demo-form .ttl{color:#101828;font-weight:800;font-size:16px;margin-bottom:2px}
+  .demo-form label{display:block;font-size:12px;font-weight:700;color:#344054;margin:10px 0 4px}
+  .demo-form input,.demo-form select,.demo-form textarea{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:14px;font-family:var(--font);color:#101828}
+  .demo-form textarea{min-height:78px;resize:vertical}
+  .demo-status{font-size:13px;font-weight:600;margin-top:10px;min-height:18px}
+  @media(max-width:760px){.demo-grid{grid-template-columns:1fr}}
+  @media(max-width:900px){
+    .grid3,.steps,.prices,.mock .grid{grid-template-columns:1fr 1fr}
+    .hero h1{font-size:40px}
+    .navlinks{display:none}
+  }
+  @media(max-width:560px){
+    .grid3,.steps,.prices,.mock .grid{grid-template-columns:1fr}
+    .hero h1{font-size:32px}
+    section{padding:56px 0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top"><span class="logo">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0F1B2D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+    </span>SDVsolution</a>
+    <nav class="navlinks">
+      <a href="#product">Product</a>
+      <a href="#standards">Standards</a>
+      <a href="#flow">How it works</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="login" href="#">Login</a>
+      <a class="btn btn-accent" href="#pricing">Start free trial</a>
+    </div>
+  </div>
+</header>
+
+<a id="top"></a>
+<section class="hero">
+  <div class="wrap">
+    <span class="pill">◆ Built for the Automotive SPICE V-model</span>
+    <h1>Requirements,<br/>done to the standard.</h1>
+    <p class="lead">The requirements platform for software-defined vehicles. Author, trace, review and verify system, software and hardware requirements — with a built-in ISO/IEC/IEEE 29148 quality gate and live traceability from stakeholder need to test.</p>
+    <div class="cta">
+      <a class="btn btn-accent" href="#pricing">Start free trial</a>
+      <a class="btn btn-ghost" href="#demo">Book a demo</a>
+    </div>
+    <div class="fineprint">14-day free trial · no card required · viewers are always free</div>
+
+    <div class="mock">
+      <div class="bar"><span class="dot"></span><b>SDVsolution</b> <span style="color:#667085;font-size:12px">· Engineering Readiness</span></div>
+      <div class="grid">
+        <div class="mcard"><div class="k">SYSTEM · SYS.2</div><div class="v">1,271</div><div class="s">requirements</div><div class="mbar"><i style="width:100%;background:#175CD3"></i></div></div>
+        <div class="mcard"><div class="k">ISO 29148 GATE</div><div class="v">PASS</div><div class="s">EARS · verifiable · unambiguous</div><div class="mbar"><i style="width:100%;background:#12B76A"></i></div></div>
+        <div class="mcard"><div class="k">TRACEABILITY</div><div class="v">100%</div><div class="s">bidirectional, live</div><div class="mbar"><i style="width:100%;background:#7A5AF8"></i></div></div>
+        <div class="mcard"><div class="k">V&amp;V COVERAGE</div><div class="v">Live</div><div class="s">curated tests per requirement</div><div class="mbar"><i style="width:82%;background:#0E7090"></i></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="standards" id="standards">
+  <div class="wrap row">
+    <span class="lbl">Aligned to the standards your customers require</span>
+    <span class="std">ISO/IEC/IEEE&nbsp;29148</span>
+    <span class="std">Automotive&nbsp;SPICE</span>
+    <span class="std">ISO&nbsp;26262</span>
+    <span class="std">ISO/SAE&nbsp;21434</span>
+  </div>
+</div>
+
+<section id="product">
+  <div class="wrap">
+    <div class="center">
+      <div class="eyebrow">Product</div>
+      <h2>One platform, the whole V.</h2>
+      <p class="muted">From stakeholder needs to verified software and hardware — with the rigor auditors expect and the speed teams want.</p>
+    </div>
+    <div class="grid3">
+      <div class="feat"><div class="ic" style="background:#EAF2FF;color:#175CD3">▤</div><h3>End-to-end V-model</h3><p class="muted">System (SYS.2), software (SWE.1–6) and hardware (HWE.1–4) requirements with architecture, detailed design and state machines — one connected model.</p></div>
+      <div class="feat"><div class="ic" style="background:#ECFDFF;color:#0E7090">✓</div><h3>ISO 29148 quality gate</h3><p class="muted">Every requirement checked live for EARS syntax, verifiability, singularity and unambiguity — quality built in, not bolted on.</p></div>
+      <div class="feat"><div class="ic" style="background:#F4F3FF;color:#7A5AF8">⇄</div><h3>Live traceability &amp; impact</h3><p class="muted">Click any requirement or signal and see everything it derives from and everything a change would affect — up and down the V.</p></div>
+      <div class="feat"><div class="ic" style="background:#ECFDF3;color:#067647">◷</div><h3>Reviews &amp; baselines</h3><p class="muted">Joint-review workflow (SUP.4), approvals, and versioned baselines with diff and restore (SUP.8/10) — real configuration management.</p></div>
+      <div class="feat"><div class="ic" style="background:#FEF6EE;color:#B54708">⌗</div><h3>Comm matrix &amp; exports</h3><p class="muted">Editable K-Matrix with auto-packing, and one-click ARXML, DBC, LDF, Excel and Word — round-trip with your toolchain.</p></div>
+      <div class="feat"><div class="ic" style="background:#FEF3F2;color:#B42318">◎</div><h3>Engineering readiness</h3><p class="muted">A live dashboard of your program across the V — safety, cybersecurity, review status and the quality gate, recomputed as you work.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="flow" id="flow">
+  <div class="wrap">
+    <div class="center">
+      <div class="eyebrow">How it works</div>
+      <h2>Get to a defensible baseline, fast.</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>Capture</h3><p class="muted">Elicit stakeholder needs and structure them into system requirements using the guided EARS template.</p></div>
+      <div class="step"><div class="n">2</div><h3>Derive</h3><p class="muted">Roll requirements down to software and hardware with architecture, detailed design and allocation to ECUs.</p></div>
+      <div class="step"><div class="n">3</div><h3>Verify</h3><p class="muted">Attach measurable acceptance criteria and test cases; the quality gate keeps every requirement testable.</p></div>
+      <div class="step"><div class="n">4</div><h3>Review &amp; baseline</h3><p class="muted">Approve through the review board, freeze a baseline, and export the SyRS/SRS and comm matrix.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="center">
+      <div class="eyebrow">Pricing</div>
+      <h2>Simple, per-editor pricing.</h2>
+      <p class="muted">Monthly membership, billed per editor. Viewers are always free. Prices in USD.</p>
+    </div>
+    <div class="prices">
+      <div class="price">
+        <h3>Free trial</h3>
+        <div class="desc">Evaluate the full platform.</div>
+        <div class="amt">$0</div><div class="per">14 days</div>
+        <ul><li>100 requirements · 1 project</li><li>1 editor · viewers free</li><li>Full features</li><li>No card required</li></ul>
+        <a class="btn btn-outline" href="#">Start free trial</a>
+      </div>
+      <div class="price">
+        <h3>Basic</h3>
+        <div class="desc">For teams starting their first program.</div>
+        <div class="amt">$149</div><div class="per">per editor / month</div>
+        <ul><li>500 requirements · 1 project</li><li>All exports &amp; integrations</li><li>ISO 29148 quality gate</li><li>API access</li><li>Viewer licenses included</li></ul>
+        <a class="btn btn-primary" href="#">Choose Basic</a>
+      </div>
+      <div class="price pop">
+        <span class="tag">Most popular</span>
+        <h3>Pro</h3>
+        <div class="desc">For teams scaling complex programs.</div>
+        <div class="amt">$299</div><div class="per">per editor / month</div>
+        <ul><li>5,000 requirements · 5 projects</li><li>Everything in Basic, plus all features</li><li>Review Board &amp; Baselines</li><li>Impact analysis</li><li>Priority support</li></ul>
+        <a class="btn btn-primary" href="#">Choose Pro</a>
+      </div>
+      <div class="price">
+        <h3>Enterprise</h3>
+        <div class="desc">For certified &amp; regulated programs.</div>
+        <div class="amt">Custom</div><div class="per">per editor / month</div>
+        <ul><li>Unlimited requirements &amp; projects</li><li>On-prem / private cloud</li><li>DOORS · Polarion · codebeamer</li><li>SSO · audit trail · SLA</li><li>ASPICE-assessment support</li></ul>
+        <a class="btn btn-outline" href="#demo">Contact sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="wrap">
+    <div class="cta-band" style="text-align:left">
+      <div class="demo-grid">
+        <div>
+          <h2>Ship requirements your assessor will trust.</h2>
+          <p style="margin:12px 0 20px">Book a walkthrough with our team to see SDVsolution on your program — or start free today.</p>
+          <a class="btn btn-accent" href="#pricing">Start free trial</a>
+        </div>
+        <form class="demo-form" id="demoForm" action="https://formspree.io/f/yourFormID" method="POST">
+          <div class="ttl">Book a demo</div>
+          <label for="df-name">Name</label>
+          <input id="df-name" name="name" required autocomplete="name" />
+          <label for="df-email">Work email</label>
+          <input id="df-email" type="email" name="email" required autocomplete="email" placeholder="you@company.com" />
+          <label for="df-company">Company</label>
+          <input id="df-company" name="company" autocomplete="organization" />
+          <label for="df-team">Team size</label>
+          <select id="df-team" name="team_size"><option>1–5</option><option>6–20</option><option>21–100</option><option>100+</option></select>
+          <label for="df-msg">What would you like to see?</label>
+          <textarea id="df-msg" name="message"></textarea>
+          <input type="hidden" name="_subject" value="SDVsolution demo request" />
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+          <button class="btn btn-primary" type="submit" style="width:100%;margin-top:14px;justify-content:center">Request demo</button>
+          <div class="demo-status" id="demoStatus" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div style="max-width:280px">
+        <div class="brand" style="margin-bottom:10px"><span class="logo"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0F1B2D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></span>SDVsolution</div>
+        <p style="color:#7C8CA0;font-size:13.5px;margin:0">The requirements platform for software-defined vehicles.</p>
+      </div>
+      <div><h4>Product</h4><a href="#product">Overview</a><a href="#flow">How it works</a><a href="#pricing">Pricing</a><a href="#standards">Standards</a></div>
+      <div><h4>Company</h4><a href="#">About</a><a href="#demo">Contact</a><a href="mailto:hello@sdvsolution.com">hello@sdvsolution.com</a></div>
+      <div><h4>Legal</h4><a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy Policy</a><a href="mailto:security@sdvsolution.com">Security</a></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 SDVsolution. All rights reserved.</span>
+      <span>ISO/IEC/IEEE 29148 · Automotive SPICE · ISO 26262 · ISO/SAE 21434</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var f=document.getElementById('demoForm'), s=document.getElementById('demoStatus');
+  if(!f) return;
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(f.action.indexOf('yourFormID')!==-1){ s.style.color='#B54708'; s.textContent='Demo form is not connected yet — add your Formspree endpoint (see README).'; return; }
+    s.style.color='#667085'; s.textContent='Sending…';
+    fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(function(r){
+      if(r.ok){ f.reset(); s.style.color='#067647'; s.textContent="Thanks — we'll be in touch shortly."; }
+      else { r.json().then(function(j){ s.style.color='#B42318'; s.textContent=(j.errors&&j.errors.map(function(x){return x.message;}).join(', '))||'Something went wrong. Email hello@sdvsolution.com.'; }).catch(function(){ s.style.color='#B42318'; s.textContent='Something went wrong. Email hello@sdvsolution.com.'; }); }
+    }).catch(function(){ s.style.color='#B42318'; s.textContent='Network error. Please email hello@sdvsolution.com.'; });
+  });
+})();
+</script>
+</body>
+</html>
