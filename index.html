@@ -304,7 +304,7 @@
         <p style="color:#7C8CA0;font-size:13.5px;margin:0">The requirements platform for software-defined vehicles.</p>
       </div>
       <div><h4>Product</h4><a href="#product">Overview</a><a href="#flow">How it works</a><a href="#pricing">Pricing</a><a href="#standards">Standards</a></div>
-      <div><h4>Company</h4><a href="#">About</a><a href="#demo">Contact</a><a href="mailto:hello@sdvsolution.com">hello@sdvsolution.com</a></div>
+      <div><h4>Company</h4><a href="#">About</a><a href="#demo">Contact</a></div>
       <div><h4>Legal</h4><a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy Policy</a><a href="mailto:security@sdvsolution.com">Security</a></div>
     </div>
     <div class="foot-bottom">
@@ -324,8 +324,8 @@
     s.style.color='#667085'; s.textContent='Sending…';
     fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(function(r){
       if(r.ok){ f.reset(); s.style.color='#067647'; s.textContent="Thanks — we'll be in touch shortly."; }
-      else { r.json().then(function(j){ s.style.color='#B42318'; s.textContent=(j.errors&&j.errors.map(function(x){return x.message;}).join(', '))||'Something went wrong. Email hello@sdvsolution.com.'; }).catch(function(){ s.style.color='#B42318'; s.textContent='Something went wrong. Email hello@sdvsolution.com.'; }); }
-    }).catch(function(){ s.style.color='#B42318'; s.textContent='Network error. Please email hello@sdvsolution.com.'; });
+      else { r.json().then(function(j){ s.style.color='#B42318'; s.textContent=(j.errors&&j.errors.map(function(x){return x.message;}).join(', '))||'Something went wrong. Please try again.'; }).catch(function(){ s.style.color='#B42318'; s.textContent='Something went wrong. Please try again.'; }); }
+    }).catch(function(){ s.style.color='#B42318'; s.textContent='Network error. Please try again.'; });
   });
 })();
 </script>
