@@ -91,6 +91,7 @@
 
   /* pricing */
   .prices{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;align-items:stretch}
+  .prices.two{grid-template-columns:repeat(2,1fr);max-width:860px;margin:0 auto}
   .price{border:1px solid var(--line);border-radius:var(--radius);padding:24px;background:#fff;display:flex;flex-direction:column}
   .price.pop{border-color:var(--blue);box-shadow:0 16px 40px rgba(23,92,211,.14);position:relative}
   .price.pop .tag{position:absolute;top:-11px;left:24px;background:var(--blue);color:#fff;font-size:11px;font-weight:800;padding:3px 10px;border-radius:999px}
@@ -131,7 +132,7 @@
     .navlinks{display:none}
   }
   @media(max-width:560px){
-    .grid3,.steps,.prices,.mock .grid{grid-template-columns:1fr}
+    .grid3,.steps,.prices,.prices.two,.mock .grid{grid-template-columns:1fr}
     .hero h1{font-size:32px}
     section{padding:56px 0}
   }
@@ -148,11 +149,11 @@
       <a href="#product">Product</a>
       <a href="#standards">Standards</a>
       <a href="#flow">How it works</a>
-      <a href="#pricing">Pricing</a>
+      <a href="#pricing">Plans</a>
     </nav>
     <div class="nav-cta">
       <a class="login" href="https://app.sdvsolution.com">Login</a>
-      <a class="btn btn-accent" href="https://app.sdvsolution.com">Start free trial</a>
+      <a class="btn btn-accent" href="#demo">Request a demo</a>
     </div>
   </div>
 </header>
@@ -164,10 +165,10 @@
     <h1>Requirements,<br/>done to the standard.</h1>
     <p class="lead">The requirements platform for software-defined vehicles. Author, trace, review and verify system, software and hardware requirements — with a built-in ISO/IEC/IEEE 29148 quality gate, live traceability from stakeholder need to test, and an AI assistant that reads your specs and drafts requirements for your engineers to review.</p>
     <div class="cta">
-      <a class="btn btn-accent" href="https://app.sdvsolution.com">Start free trial</a>
+      <a class="btn btn-accent" href="#demo">Request a demo</a>
       <a class="btn btn-ghost" href="#demo">Contact</a>
     </div>
-    <div class="fineprint">14-day free trial · no card required</div>
+    <div class="fineprint">Demo by request · access by email</div>
 
     <div class="mock">
       <div class="bar"><span class="dot"></span><b>SDVsolution</b> <span style="color:#667085;font-size:12px">· Engineering Readiness</span></div>
@@ -236,38 +237,24 @@
 <section id="pricing">
   <div class="wrap">
     <div class="center">
-      <div class="eyebrow">Pricing</div>
-      <h2>Simple, per-editor pricing.</h2>
-      <p class="muted">Monthly membership, billed per editor. Prices in USD. Basic and Advance are self‑serve — start, subscribe and get support in‑app. Pro is tailored to your program and priced by quote — contact sales.</p>
+      <div class="eyebrow">Plans</div>
+      <h2>Start with the demo. License what you need.</h2>
+      <p class="muted">We show you the demo and give your team access by email. When you are ready, we scope a license to your program and price it by quote.</p>
     </div>
-    <div class="prices">
+    <div class="prices two">
       <div class="price">
-        <h3>Free trial</h3>
-        <div class="desc">Explore a sample feature, end to end.</div>
-        <div class="amt">$0</div><div class="per">14 days</div>
-        <ul><li>A guided sample feature</li><li>End to end: SYS → SWE → HWE</li><li>4 Door Control Modules (ECUs)</li><li>1 editor · no card required</li></ul>
-        <a class="btn btn-outline" href="https://app.sdvsolution.com">Start free trial</a>
-      </div>
-      <div class="price">
-        <h3>Basic</h3>
-        <div class="desc">For teams starting their first program.</div>
-        <div class="amt">$249</div><div class="per">per editor / month</div>
-        <ul><li>500 requirements · 1 project</li><li>All exports &amp; integrations</li><li>ISO 29148 quality gate</li><li>API access</li></ul>
-        <a class="btn btn-primary" href="https://app.sdvsolution.com/?plan=basic">Choose Basic</a>
+        <h3>Demo</h3>
+        <div class="desc">See a sample feature, end to end.</div>
+        <div class="amt">Free</div><div class="per">by request · access by email</div>
+        <ul><li>A walkthrough with our team</li><li>Then access for your team, by email</li><li>A sample feature, end to end: SYS → SWE → HWE</li><li>4 Door Control Modules (ECUs)</li></ul>
+        <a class="btn btn-outline" href="#demo">Request a demo</a>
       </div>
       <div class="price pop">
-        <span class="tag">Most popular</span>
-        <h3>Advance</h3>
-        <div class="desc">For teams scaling complex programs.</div>
-        <div class="amt">$399</div><div class="per">per editor / month</div>
-        <ul><li>5,000 requirements · 5 projects</li><li>Everything in Basic, plus all features</li><li>Review Board &amp; Baselines</li><li>Impact analysis &amp; live traceability</li><li>Logicals &amp; connector interfaces (ICD)</li><li>Priority support</li></ul>
-        <a class="btn btn-primary" href="https://app.sdvsolution.com/?plan=advance">Choose Advance</a>
-      </div>
-      <div class="price">
-        <h3>Pro</h3>
-        <div class="desc">For certified programs &amp; regulated industries.</div>
+        <span class="tag">For your program</span>
+        <h3>Custom</h3>
+        <div class="desc">Scoped to your program and priced by quote.</div>
         <div class="amt">Custom</div><div class="per">priced by quote</div>
-        <ul><li>Everything in Advance, plus:</li><li>Unlimited requirements &amp; projects</li><li>Logicals, schematics &amp; connector pin-outs</li><li>K-Matrix comm matrix · ARXML/DBC/LDF</li><li>DOORS · Polarion · Codebeamer</li><li>Custom integrations</li><li>Advanced access controls · Viewer licenses</li><li>SSO · audit trail · SLA · ASPICE-assessment support</li></ul>
+        <ul><li>Scoped to your program</li><li>All platform features, unlimited requirements &amp; projects</li><li>K-Matrix comm matrix · ARXML/DBC/LDF · connector pin-outs</li><li>DOORS · Polarion · Codebeamer · custom integrations</li><li>SSO · access controls · audit trail · SLA · ASPICE-assessment support</li></ul>
         <a class="btn btn-primary" href="#demo">Contact sales</a>
       </div>
     </div>
@@ -280,8 +267,8 @@
       <div class="demo-grid">
         <div>
           <h2>Ship requirements your assessor will trust.</h2>
-          <p style="margin:12px 0 20px">Get in touch — a question, a walkthrough, or anything else. Or start free today.</p>
-          <a class="btn btn-accent" href="https://app.sdvsolution.com">Start free trial</a>
+          <p style="margin:12px 0 20px">Tell us about your program and we will show you the demo, then give your team access by email.</p>
+          <a class="btn btn-accent" href="#demo">Request a demo</a>
         </div>
         <form class="demo-form" id="demoForm" action="https://formspree.io/f/xljrqwaw" method="POST">
           <div class="ttl">Contact us</div>
@@ -313,7 +300,7 @@
         <p style="color:#7C8CA0;font-size:13.5px;margin:0 0 12px">The requirements platform for software-defined vehicles.</p>
         <a href="https://www.linkedin.com/company/sdvsolution/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#C9D3E0;border:1px solid rgba(255,255,255,.16);border-radius:8px;padding:7px 12px">Follow us on LinkedIn →</a>
       </div>
-      <div><h4>Product</h4><a href="#product">Overview</a><a href="#flow">How it works</a><a href="#pricing">Pricing</a><a href="#standards">Standards</a></div>
+      <div><h4>Product</h4><a href="#product">Overview</a><a href="#flow">How it works</a><a href="#pricing">Plans</a><a href="#standards">Standards</a></div>
       <div><h4>Company</h4><a href="#">About</a><a href="#demo">Contact</a><a href="https://www.linkedin.com/company/sdvsolution/" target="_blank" rel="noopener">LinkedIn</a></div>
       <div><h4>Legal</h4><a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy Policy</a></div>
     </div>

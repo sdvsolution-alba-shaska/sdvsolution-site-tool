@@ -53,7 +53,7 @@ The demo form is wired for **Formspree** (works on static hosts like GitHub Page
 Prefer email only? Replace the form with `<a href="mailto:hello@sdvsolution.com">`. Other backends (Getform, Basin, Netlify Forms) work the same way — just change the `action`.
 
 ## Before launch — wire these links in `index.html`
-- **Start free trial / Choose plan** buttons → your app sign-up URL.
+- **Request a demo / Contact sales** buttons → the contact form (`#demo`); **Login** → the app.
 - **Login** → your app login URL.
 - **Book a demo** → a form or `mailto:hello@sdvsolution.com`.
 - **Terms / Privacy / Security** footer links → real pages.
