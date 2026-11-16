@@ -85,7 +85,7 @@ def box(x, y, w, h, t, s=None, core=False):
     if s: o += f'<text class="d-s" x="{x + w / 2}" y="{y + h / 2 + 14}" text-anchor="middle">{s}</text>'
     return o
 
-TOPO = f'''<svg class="topo" viewBox="0 0 660 520" role="img" aria-label="Vehicle topology: a connectivity unit above the central computer, which connects by Ethernet to the front zone and the center zone. The zones reach wiper, brake, door, seat, roof, lighting and tire units over CAN and LIN.">
+TOPO = f'''<svg class="topo" viewBox="0 0 660 520" role="img" aria-label="Vehicle topology: a connectivity unit above the central computer, which connects by Ethernet to the front zone and the center zone. The zones reach wiper, brake, door, seat, roof, lighting and battery management units over CAN and LIN.">
   <path class="bus d-eth" d="M320 68V100M320 158V206M320 206H120V246M320 206H430V246"/>
   <path class="bus b2 d-can" d="M120 302V346M70 346H170M70 346V382M170 346V382M430 302V346M270 346H590M270 346V382M350 346V382M430 346V382M510 346V382M590 346V382"/>
   <path class="bus b3 d-lin" d="M70 430V466M170 430V466M270 430V466M430 430V466M510 430V466"/>
@@ -94,7 +94,7 @@ TOPO = f'''<svg class="topo" viewBox="0 0 660 520" role="img" aria-label="Vehicl
   {box(50, 246, 140, 56, "Front zone", "climate, chassis")}
   {box(340, 246, 180, 56, "Center zone", "body, energy")}
   {box(30, 382, 80, 48, "Wiper")}{box(130, 382, 80, 48, "Brake")}
-  {box(234, 382, 72, 48, "Doors")}{box(314, 382, 72, 48, "Seats")}{box(394, 382, 72, 48, "Roof")}{box(474, 382, 72, 48, "Lighting")}{box(554, 382, 72, 48, "Tires")}
+  {box(234, 382, 72, 48, "Doors")}{box(314, 382, 72, 48, "Seats")}{box(394, 382, 72, 48, "Roof")}{box(474, 382, 72, 48, "Lighting")}{box(554, 382, 72, 48, "BMS")}
   <g class="d-s" text-anchor="middle"><text x="70" y="484">rain sensor</text><text x="170" y="484">wear sensor</text><text x="270" y="484">switch pack</text><text x="430" y="484">interior mirror</text><text x="510" y="484">ambient light</text></g>
 </svg>
 <div class="legend"><span><i style="background:var(--lime)"></i>Ethernet</span><span><i style="background:var(--can)"></i>CAN</span><span><i style="background:var(--lin)"></i>LIN</span></div>'''
