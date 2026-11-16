@@ -2,7 +2,8 @@
 """Builds the SDVsolution website pages into the repo folder given as argv[1]."""
 import sys, os
 OUT = sys.argv[1]
-NEW = 'target="_blank" rel="noopener"'
+NEW = ""  # our own pages open in the same window
+EXT = 'target="_blank" rel="noopener"'  # other sites
 
 LOGO = '<svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" fill="#9CFF3A"/><g fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="square"><circle cx="18.5" cy="7" r="2.6"/><circle cx="7.5" cy="13" r="2.6"/><circle cx="18.5" cy="19" r="2.6"/><path d="M9.8 11.8l6.4-3.6M9.8 14.2l6.4 3.6"/></g></svg>'
 
@@ -48,7 +49,7 @@ def footer():
   <div class="fgrid">
     <div><div class="brand" style="margin-bottom:12px">{LOGO}SDVsolution</div><p style="max-width:34ch">One engineering system for the software-defined vehicle, from the first requirement to the integrated vehicle software.</p></div>
     <div><h4>Product</h4><a href="platform.html" {NEW}>Platform</a><a href="software-factory.html" {NEW}>Software factory</a><a href="nvidia-drive.html" {NEW}>NVIDIA DRIVE</a><a href="solutions.html" {NEW}>Solutions and plans</a></div>
-    <div><h4>Company</h4><a href="#demo">Contact</a><a href="https://www.linkedin.com/company/sdvsolution/" {NEW}>LinkedIn</a><a href="https://app.sdvsolution.com" {NEW}>Log in</a></div>
+    <div><h4>Company</h4><a href="#demo">Contact</a><a href="https://www.linkedin.com/company/sdvsolution/" {EXT}>LinkedIn</a><a href="https://app.sdvsolution.com" {NEW}>Log in</a></div>
     <div><h4>Legal</h4><a href="terms.html" {NEW}>Terms of Service</a><a href="privacy.html" {NEW}>Privacy Policy</a></div>
   </div>
   <div class="fbot"><span>© 2026 SDVsolution. All rights reserved.</span><span>NVIDIA and NVIDIA DRIVE are trademarks of NVIDIA Corporation. SDVsolution is not affiliated with, sponsored by or endorsed by NVIDIA.</span></div>
@@ -84,18 +85,17 @@ def box(x, y, w, h, t, s=None, core=False):
     if s: o += f'<text class="d-s" x="{x + w / 2}" y="{y + h / 2 + 14}" text-anchor="middle">{s}</text>'
     return o
 
-TOPO = f'''<svg class="topo" viewBox="0 0 640 470" role="img" aria-label="Vehicle topology: a central computer connected by Ethernet to front, center and rear zone controllers, which reach door, seat, lighting and climate units over CAN and LIN.">
-  <path class="bus d-eth" d="M320 92V150M320 150H110V196M320 150V196M320 150H530V196"/>
-  <path class="bus b2 d-can" d="M110 252V300M60 300H160M60 300V336M160 300V336M320 252V300M250 300H390M250 300V336M320 300V336M390 300V336M530 252V300M480 300H580M480 300V336M580 300V336"/>
-  <path class="bus b3 d-lin" d="M60 384V420M160 384V420M250 384V420M390 384V420M480 384V420M580 384V420"/>
-  {box(230, 34, 180, 58, "Central computer", "driver assistance + cockpit", True)}
-  {box(40, 196, 140, 56, "Front zone", "climate, chassis")}
-  {box(250, 196, 140, 56, "Center zone", "body, access, power")}
-  {box(460, 196, 140, 56, "Rear zone", "tailgate, trailer")}
-  {box(20, 336, 80, 48, "Wiper")}{box(120, 336, 80, 48, "Brake")}
-  {box(212, 336, 76, 48, "Doors")}{box(292, 336, 56, 48, "Seats")}{box(352, 336, 76, 48, "Roof")}
-  {box(440, 336, 80, 48, "Lighting")}{box(540, 336, 80, 48, "Tires")}
-  <g class="d-s" text-anchor="middle"><text x="60" y="438">rain sensor</text><text x="160" y="438">wear sensor</text><text x="250" y="438">switch pack</text><text x="390" y="438">mirror</text><text x="480" y="438">ambient light</text><text x="580" y="438">parking lock</text></g>
+TOPO = f'''<svg class="topo" viewBox="0 0 660 520" role="img" aria-label="Vehicle topology: a connectivity unit above the central computer, which connects by Ethernet to the front zone and the center zone. The zones reach wiper, brake, door, seat, roof, lighting and tire units over CAN and LIN.">
+  <path class="bus d-eth" d="M320 68V100M320 158V206M320 206H120V246M320 206H430V246"/>
+  <path class="bus b2 d-can" d="M120 302V346M70 346H170M70 346V382M170 346V382M430 302V346M270 346H590M270 346V382M350 346V382M430 346V382M510 346V382M590 346V382"/>
+  <path class="bus b3 d-lin" d="M70 430V466M170 430V466M270 430V466M430 430V466M510 430V466"/>
+  {box(230, 20, 180, 48, "Connectivity", "5G, Wi-Fi, positioning")}
+  {box(230, 100, 180, 58, "Central computer", "driver assistance + cockpit", True)}
+  {box(50, 246, 140, 56, "Front zone", "climate, chassis")}
+  {box(340, 246, 180, 56, "Center zone", "body, energy")}
+  {box(30, 382, 80, 48, "Wiper")}{box(130, 382, 80, 48, "Brake")}
+  {box(234, 382, 72, 48, "Doors")}{box(314, 382, 72, 48, "Seats")}{box(394, 382, 72, 48, "Roof")}{box(474, 382, 72, 48, "Lighting")}{box(554, 382, 72, 48, "Tires")}
+  <g class="d-s" text-anchor="middle"><text x="70" y="484">rain sensor</text><text x="170" y="484">wear sensor</text><text x="270" y="484">switch pack</text><text x="430" y="484">interior mirror</text><text x="510" y="484">ambient light</text></g>
 </svg>
 <div class="legend"><span><i style="background:var(--lime)"></i>Ethernet</span><span><i style="background:var(--can)"></i>CAN</span><span><i style="background:var(--lin)"></i>LIN</span></div>'''
 
@@ -331,13 +331,13 @@ def gen_svg(two):
     cc = box(210, 30, 220, 56, "NVIDIA DRIVE AGX Thor", "driver assistance + cockpit" if two else "driver assistance", True)
     cockpit = "" if two else box(470, 30, 150, 56, "Cockpit computer", "its own unit")
     link = "" if two else '<path class="d-wire d-eth" d="M430 58H470"/>'
-    return f'''<svg viewBox="0 0 640 300" role="img" aria-label="{"One Thor-based central computer for driver assistance and cockpit" if two else "A Thor-based driver-assistance computer beside a separate cockpit computer"}, connected by Ethernet to three zone controllers, with cameras, radars and displays.">
-  <path class="d-wire d-eth" d="M320 86V130M320 130H110V170M320 130V170M320 130H530V170"/>{link}
-  <path class="d-wire d-can" d="M110 222V250M320 222V250M530 222V250"/>
+    return f'''<svg viewBox="0 0 640 300" role="img" aria-label="{"One Thor-based central computer for driver assistance and cockpit" if two else "A Thor-based driver-assistance computer beside a separate cockpit computer"}, connected by Ethernet to the front zone and the center zone, with cameras, radars and displays.">
+  <path class="d-wire d-eth" d="M320 86V130M320 130H170V170M320 130H470V170"/>{link}
+  <path class="d-wire d-can" d="M170 222V250M470 222V250"/>
   {cc}{cockpit}
   {box(20, 30, 150, 56, "Cameras, radars", "ultrasonic sensors")}<path class="d-wire d-eth" d="M170 58H210"/>
-  {box(40, 170, 140, 52, "Front zone")}{box(250, 170, 140, 52, "Center zone")}{box(460, 170, 140, 52, "Rear zone")}
-  <g class="d-s" text-anchor="middle"><text x="110" y="268">climate, chassis</text><text x="320" y="268">body, doors, seats</text><text x="530" y="268">tailgate, trailer</text></g>
+  {box(90, 170, 160, 52, "Front zone")}{box(380, 170, 180, 52, "Center zone")}
+  <g class="d-s" text-anchor="middle"><text x="170" y="268">climate, chassis</text><text x="470" y="268">body, energy: doors, seats, lighting, tailgate</text></g>
 </svg>'''
 
 nvidia = phero("NVIDIA DRIVE", "The vehicle around NVIDIA DRIVE AGX Thor.", "Choosing the central computer is one decision. Connecting it to the dozens of other ECUs in the vehicle is the larger job. SDVsolution models that vehicle for you, in two ready-made architectures.") + f'''
