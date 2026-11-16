@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Software factory | SDVsolution</title>
+<meta name="description" content="The SDVsolution software factory generates C code and unit tests for each vehicle feature from its behavior model, integrates the features deployed on each ECU, and assembles the complete vehicle software package." />
+<link rel="preload" href="assets/fonts/barlow-condensed-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="assets/site.css" />
+</head>
+<body>
+<header class="top"><div class="wrap nav">
+  <a class="brand" href="index.html" target="_blank" rel="noopener"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" fill="#9CFF3A"/><g fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="square"><circle cx="18.5" cy="7" r="2.6"/><circle cx="7.5" cy="13" r="2.6"/><circle cx="18.5" cy="19" r="2.6"/><path d="M9.8 11.8l6.4-3.6M9.8 14.2l6.4 3.6"/></g></svg>SDVsolution</a>
+  <nav class="navlinks" aria-label="Main"><a href="platform.html" target="_blank" rel="noopener">Platform</a><a href="software-factory.html" target="_blank" rel="noopener" aria-current="page">Software factory</a><a href="nvidia-drive.html" target="_blank" rel="noopener">NVIDIA DRIVE</a><a href="solutions.html" target="_blank" rel="noopener">Solutions and plans</a></nav>
+  <div class="nav-cta"><a class="login" href="https://app.sdvsolution.com" target="_blank" rel="noopener">Log in</a><a class="btn btn-lime" href="#demo">Request a demo</a></div>
+</div></header>
+<a id="top"></a>
+<section class="phero"><div class="wrap"><p class="crumb"><a href="index.html" target="_blank" rel="noopener">SDVsolution</a> / Software factory</p><h1>Code for each feature. Software for each ECU. One package for the vehicle.</h1><p class="lead">A behavior model describes what a feature does. The software factory turns each approved model into C code and unit tests, then integrates the features deployed on an ECU into the software for that ECU.</p></div></section>
+<section class="band band-black"><div class="wrap">
+  <div class="head"><h2>How a feature becomes software</h2></div>
+  <div class="steps">
+    <div class="step"><h3>Model the behavior</h3><p>States, transitions, inputs, outputs, timing and calibration values. An agent can propose the model from the feature's requirements; an engineer approves it.</p></div>
+    <div class="step"><h3>Generate the feature</h3><p>C source and header for the feature, with unit tests that drive it through its scenarios and check outputs, states and timing.</p></div>
+    <div class="step"><h3>Integrate the ECU</h3><p>Every feature deployed on the ECU is wired together: signals routed between features, a schedule, and an integration test for the whole ECU.</p></div>
+    <div class="step"><h3>Assemble the vehicle</h3><p>One package with every ECU, plus a list of the signals that cross between ECUs so the buses can be checked.</p></div>
+  </div>
+</div></section>
+
+<section class="band band-ink"><div class="wrap">
+  <div class="row"><figure class="art"><svg viewBox="0 0 520 300" role="img" aria-label="A behavior model becomes C code and unit tests for one feature. The features deployed on one ECU are integrated into that ECU's software, and the ECUs into the vehicle package.">
+  <rect class="d-box" x="20" y="30" width="130" height="50"/><text class="d-t" x="85.0" y="53.0" text-anchor="middle">Behavior model</text><text class="d-s" x="85.0" y="69.0" text-anchor="middle">states, signals</text>
+  <path class="d-wire d-eth" d="M150 55H190"/>
+  <rect class="d-core" x="190" y="20" width="310" height="110"/>
+  <g class="d-code" xml:space="preserve"><text x="204" y="44">void MirrorFold_Step(void) {</text><text x="204" y="62">  switch (state) {</text><text x="204" y="80">    case FOLDING:</text><text x="204" y="98">      if (t_ms &gt;= CAL_FOLD_MS)</text><text x="204" y="116">        state = FOLDED;</text></g>
+  <path class="d-wire d-eth" d="M345 130V166"/>
+  <rect class="d-box" x="40" y="166" width="130" height="46"/><text class="d-t" x="105.0" y="187.0" text-anchor="middle">Feature</text><text class="d-s" x="105.0" y="203.0" text-anchor="middle">code + unit tests</text><rect class="d-box" x="195" y="166" width="130" height="46"/><text class="d-t" x="260.0" y="187.0" text-anchor="middle">Feature</text><text class="d-s" x="260.0" y="203.0" text-anchor="middle">code + unit tests</text><rect class="d-box" x="350" y="166" width="130" height="46"/><text class="d-t" x="415.0" y="187.0" text-anchor="middle">Feature</text><text class="d-s" x="415.0" y="203.0" text-anchor="middle">code + unit tests</text>
+  <path class="d-wire d-can" d="M105 212V236H415V212M260 212V236M260 236V250"/>
+  <rect class="d-core" x="170" y="250" width="180" height="40"/><text class="d-t" x="260.0" y="275.0" text-anchor="middle">ECU software, integrated</text>
+</svg></figure><div><h3>The target ECU comes from the deployment</h3><p>You decide once where each feature runs. A window feature runs on the door modules, a seat feature on the seat modules, climate on the front zone. The factory reads that deployment and builds each ECU from the features it hosts.</p><ul><li>A feature can run on several ECUs, such as all four door modules</li><li>Two features that write the same signal are caught before code is generated</li><li>Calibration values stay separate per feature</li></ul></div></div>
+  <div class="row flip"><figure class="art"><svg viewBox="0 0 520 320" role="img" aria-label="The contents of a generated ECU package: one folder per software component, the integration layer, the test, the AUTOSAR description, a makefile and a manifest.">
+  <rect class="d-box" x="20" y="16" width="480" height="288"/>
+  <g class="d-code" xml:space="preserve" style="font-size:13.5px">
+   <text x="40" y="46">ecu/CZM/</text>
+   <text x="40" y="72">  swc/MirrorFold/        MirrorFold.c  .h  test</text>
+   <text x="40" y="96">  swc/WindowLifter/      WindowLifter.c  .h  test</text>
+   <text x="40" y="120">  swc/CentralLocking/    CentralLocking.c  .h  test</text>
+   <text x="40" y="148">  integration/Ecu_CZM.h</text>
+   <text x="40" y="172">  integration/Ecu_CZM_Rte.c       signal routing</text>
+   <text x="40" y="196">  integration/Ecu_CZM_Schedule.c  task schedule</text>
+   <text x="40" y="220">  integration/test/test_Ecu_CZM.c</text>
+   <text x="40" y="248">  arxml/CZM_Composition.arxml</text>
+   <text x="40" y="272">  Makefile   README.txt   manifest.json</text>
+  </g>
+</svg></figure><div><h3>What is in an ECU package</h3><p>A folder you can build. The makefile compiles the package and runs the integration test.</p><ul><li>One software component per feature, with its own unit test</li><li>The integration layer: ECU header, signal routing and task schedule</li><li>An integration test that replays each feature's scenarios through the ECU's inputs</li><li>An AUTOSAR composition description (ARXML) and a manifest of what was built</li></ul></div></div>
+</div></section>
+
+<section class="band on-paper"><div class="wrap">
+  <div class="head"><h2>How it is checked</h2><p class="lead">Generated code is only useful if you can trust it, so the factory tests what it writes.</p></div>
+  <div class="cols">
+    <div><h3>Compiled with strict warnings</h3><p>Generated packages are compiled with the compiler's warnings turned on and treated as errors.</p></div>
+    <div><h3>Tested at two levels</h3><p>Each feature has unit tests. Each ECU has an integration test that runs every feature's scenarios again once the features are wired together.</p></div>
+    <div><h3>The tests are tested</h3><p>We plant deliberate faults in the integration layer and check that the integration test catches them.</p></div>
+    <div><h3>Your engineers stay in charge</h3><p>Models are proposed, then reviewed and approved by an engineer. Only approved models go into a release package.</p></div>
+  </div>
+</div></section>
+
+<section class="band band-black"><div class="wrap">
+  <div class="head"><h2>Take the software at the size you need</h2></div>
+  <div class="scroll"><table class="tbl">
+    <tr><th>License</th><th>What you receive</th></tr>
+    <tr><td>Per feature</td><td>The code and unit tests for one feature, with its requirements and behavior model</td></tr>
+    <tr><td>Per ECU</td><td>The integrated software for one ECU: every feature deployed on it, the integration layer and the integration test</td></tr>
+    <tr><td>Complete vehicle</td><td>Every ECU package and the signals between them, with support on the integration bench, hardware-in-the-loop and the lab car</td></tr>
+  </table></div>
+  <p style="margin-top:34px"><a class="more" href="solutions.html" target="_blank" rel="noopener">See the ways to work with us, and the plans</a></p>
+</div></section>
+<section class="band band-ink" id="demo"><div class="wrap contact">
+  <div>
+    <h2>See a feature go from model to code.</h2>
+    <p class="lead">We generate a sample feature in the demo and show you the package it produces. We reply by email.</p>
+    <ul class="pts">
+      <li>A walkthrough with our team, on a sample feature from requirement to test</li>
+      <li>Then access for your team, by email</li>
+      <li>A quote scoped to a feature, a sub-system, a domain or the full stack</li>
+    </ul>
+  </div>
+  <form class="demo" id="demoForm" action="https://formspree.io/f/xljrqwaw" method="POST">
+    <div class="ttl">Request a demo or contact us</div>
+    <label for="df-name">Name</label><input id="df-name" name="name" required autocomplete="name" />
+    <label for="df-email">Work email</label><input id="df-email" type="email" name="email" required autocomplete="email" placeholder="you@company.com" />
+    <label for="df-company">Company</label><input id="df-company" name="company" autocomplete="organization" />
+    <label for="df-team">Team size</label><select id="df-team" name="team_size"><option>1–5</option><option>6–20</option><option>21–100</option><option>100+</option></select>
+    <label for="df-interest">I'm interested in</label><select id="df-interest" name="interest"><option>A demo</option><option>NVIDIA DRIVE AGX Thor integration</option><option>Generated software for a feature</option><option>Generated software for an ECU</option><option>The complete vehicle software</option><option>A license for a sub-system or domain</option><option>A tool license</option><option>Something else</option></select>
+    <label for="df-msg">What would you like to see?</label><textarea id="df-msg" name="message"></textarea>
+    <input type="hidden" name="_subject" value="SDVsolution contact request" />
+    <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+    <button class="btn btn-lime" type="submit">Send request</button>
+    <div class="status" id="demoStatus" role="status" aria-live="polite"></div>
+  </form>
+</div></section>
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div><div class="brand" style="margin-bottom:12px"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" fill="#9CFF3A"/><g fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="square"><circle cx="18.5" cy="7" r="2.6"/><circle cx="7.5" cy="13" r="2.6"/><circle cx="18.5" cy="19" r="2.6"/><path d="M9.8 11.8l6.4-3.6M9.8 14.2l6.4 3.6"/></g></svg>SDVsolution</div><p style="max-width:34ch">One engineering system for the software-defined vehicle, from the first requirement to the integrated vehicle software.</p></div>
+    <div><h4>Product</h4><a href="platform.html" target="_blank" rel="noopener">Platform</a><a href="software-factory.html" target="_blank" rel="noopener">Software factory</a><a href="nvidia-drive.html" target="_blank" rel="noopener">NVIDIA DRIVE</a><a href="solutions.html" target="_blank" rel="noopener">Solutions and plans</a></div>
+    <div><h4>Company</h4><a href="#demo">Contact</a><a href="https://www.linkedin.com/company/sdvsolution/" target="_blank" rel="noopener">LinkedIn</a><a href="https://app.sdvsolution.com" target="_blank" rel="noopener">Log in</a></div>
+    <div><h4>Legal</h4><a href="terms.html" target="_blank" rel="noopener">Terms of Service</a><a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a></div>
+  </div>
+  <div class="fbot"><span>© 2026 SDVsolution. All rights reserved.</span><span>NVIDIA and NVIDIA DRIVE are trademarks of NVIDIA Corporation. SDVsolution is not affiliated with, sponsored by or endorsed by NVIDIA.</span></div>
+</div></footer>
+<script src="assets/site.js"></script>
+</body>
+</html>

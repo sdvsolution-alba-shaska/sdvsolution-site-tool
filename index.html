@@ -3,418 +3,167 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SDVsolution — Requirements, done to the standard</title>
-<meta name="description" content="The requirements platform for software-defined vehicles. Author, trace, review and verify system, software and hardware requirements across the Automotive SPICE V, and integrate the complete vehicle faster — including architectures built on NVIDIA DRIVE AGX Thor. Licensed per feature, sub-system, domain or full stack." />
-<style>
-  :root{
-    --ink:#0F1B2D; --ink2:#1D2939; --panel:#12233b;
-    --text:#344054; --muted:#667085; --line:#E4E7EC;
-    --blue:#175CD3; --blue2:#0E7090; --violet:#7A5AF8; --green:#12B76A; --accent:#9CFF3A; --amber:#B54708;
-    --radius:14px; --max:1140px;
-    --font: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{margin:0;font-family:var(--font);color:var(--text);background:#fff;line-height:1.55;-webkit-font-smoothing:antialiased}
-  a{color:inherit;text-decoration:none}
-  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
-  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;border-radius:10px;padding:11px 18px;cursor:pointer;border:1px solid transparent;transition:.15s}
-  .btn-primary{background:var(--blue);color:#fff}
-  .btn-primary:hover{background:#134db3}
-  .btn-accent{background:var(--accent);color:var(--ink)}
-  .btn-accent:hover{filter:brightness(.95)}
-  .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.25)}
-  .btn-ghost:hover{border-color:rgba(255,255,255,.55)}
-  .btn-outline{background:#fff;color:var(--ink2);border-color:var(--line)}
-  .eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--blue2)}
-  h1,h2,h3{color:var(--ink);line-height:1.15;margin:0}
-  section{padding:76px 0}
-  .muted{color:var(--muted)}
-
-  /* header */
-  header{position:sticky;top:0;z-index:50;background:rgba(15,27,45,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.08)}
-  .nav{display:flex;align-items:center;gap:26px;height:64px}
-  .brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:800;font-size:18px}
-  .logo{width:26px;height:26px;border-radius:7px;background:var(--accent);display:flex;align-items:center;justify-content:center}
-  .navlinks{display:flex;gap:22px;margin-left:8px}
-  .navlinks a{color:#C9D3E0;font-size:14px;font-weight:600}
-  .navlinks a:hover{color:#fff}
-  .nav-cta{margin-left:auto;display:flex;align-items:center;gap:12px}
-  .nav-cta a.login{color:#C9D3E0;font-size:14px;font-weight:600}
-
-  /* hero */
-  .hero{background:radial-gradient(1200px 500px at 80% -10%, #1b3358 0%, var(--ink) 55%);color:#fff;padding:92px 0 84px}
-  .hero h1{color:#fff;font-size:52px;letter-spacing:-.02em}
-  .hero p.lead{color:#C9D3E0;font-size:19px;max-width:640px;margin:20px 0 28px}
-  .hero .cta{display:flex;gap:14px;flex-wrap:wrap}
-  .hero .fineprint{color:#8CA0B8;font-size:13px;margin-top:16px}
-  .pill{display:inline-flex;gap:8px;align-items:center;background:rgba(156,255,58,.12);border:1px solid rgba(156,255,58,.35);color:#DDF7B8;font-size:12.5px;font-weight:700;padding:6px 12px;border-radius:999px;margin-bottom:22px}
-
-  /* dashboard mock */
-  .mock{margin-top:56px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 80px rgba(0,0,0,.45);background:#fff}
-  .mock .bar{display:flex;align-items:center;gap:8px;background:var(--ink2);padding:10px 14px}
-  .mock .bar b{color:#fff;font-size:13px;font-weight:800}
-  .mock .bar .dot{width:9px;height:9px;border-radius:9px;background:var(--accent)}
-  .mock .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line)}
-  .mcard{background:#fff;padding:16px}
-  .mcard .k{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--muted)}
-  .mcard .v{font-size:30px;font-weight:800;color:var(--ink);margin-top:4px}
-  .mcard .s{font-size:12px;color:var(--muted)}
-  .mbar{height:6px;border-radius:4px;background:#EAECF0;overflow:hidden;margin-top:10px}
-  .mbar i{display:block;height:100%}
-
-  /* logos / standards */
-  .standards{background:#0B1524;color:#93A4B8;padding:26px 0}
-  .standards .row{display:flex;flex-wrap:wrap;gap:14px 34px;align-items:center;justify-content:center}
-  .standards .row .lbl{font-size:12px;font-weight:700;letter-spacing:.06em;color:#7C8CA0}
-  .std{color:#CBD5E1;font-weight:800;font-size:15px;opacity:.9}
-
-  /* features */
-  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-  .feat{border:1px solid var(--line);border-radius:var(--radius);padding:22px;background:#fff;transition:.15s}
-  .feat:hover{box-shadow:0 12px 30px rgba(16,24,40,.08);transform:translateY(-2px)}
-  .feat .ic{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px}
-  .feat h3{font-size:17px;margin-bottom:6px}
-  .feat p{font-size:14px;margin:0}
-
-  .center{text-align:center;max-width:720px;margin:0 auto 44px}
-  .center h2{font-size:36px;letter-spacing:-.01em}
-  .center p{font-size:17px;margin-top:12px}
-
-  /* flow */
-  .flow{background:#F7F9FC}
-  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-  .step{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px}
-  .step .n{width:28px;height:28px;border-radius:8px;background:var(--ink);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}
-  .step h3{font-size:16px;margin:12px 0 4px}
-  .step p{font-size:13.5px;margin:0}
-
-  /* pricing */
-  .prices{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;align-items:stretch}
-  .price{border:1px solid var(--line);border-radius:var(--radius);padding:24px;background:#fff;display:flex;flex-direction:column}
-  .price.pop{border-color:var(--blue);box-shadow:0 16px 40px rgba(23,92,211,.14);position:relative}
-  .price.pop .tag{position:absolute;top:-11px;left:24px;background:var(--blue);color:#fff;font-size:11px;font-weight:800;padding:3px 10px;border-radius:999px}
-  .price h3{font-size:18px}
-  .price .desc{font-size:13px;color:var(--muted);margin:6px 0 14px;min-height:34px}
-  .price .amt{font-size:34px;font-weight:800;color:var(--ink)}
-  .price .per{font-size:13px;color:var(--muted)}
-  .price ul{list-style:none;padding:0;margin:16px 0 20px;flex:1}
-  .price li{font-size:13.5px;padding:6px 0 6px 24px;position:relative;color:var(--text);border-top:1px solid #F2F4F7}
-  .price li:before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:800}
-  .price .btn{width:100%;justify-content:center}
-
-  .prices.two{grid-template-columns:repeat(2,1fr);max-width:860px;margin:0 auto}
-
-  /* NVIDIA DRIVE section */
-  .nv{background:linear-gradient(180deg,#0B1524 0%,#0F1B2D 100%);color:#C9D3E0}
-  .nv .center h2{color:#fff}
-  .nv .center p{color:#C9D3E0}
-  .nv .eyebrow{color:var(--accent)}
-  .gens{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
-  .gen{border:1px solid rgba(255,255,255,.14);border-radius:var(--radius);padding:24px;background:rgba(255,255,255,.04)}
-  .gen .tagline{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--ink);background:var(--accent);border-radius:999px;padding:3px 10px;margin-bottom:12px}
-  .gen h3{color:#fff;font-size:20px;margin-bottom:8px}
-  .gen p{font-size:14.5px;margin:0 0 12px;color:#C9D3E0}
-  .gen ul{list-style:none;padding:0;margin:0}
-  .gen li{font-size:13.5px;padding:6px 0 6px 22px;position:relative;border-top:1px solid rgba(255,255,255,.08);color:#C9D3E0}
-  .gen li:before{content:"✓";position:absolute;left:0;color:var(--accent);font-weight:800}
-  .deliver{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:26px}
-  .deliver div{border-top:2px solid var(--accent);padding-top:12px}
-  .deliver b{display:block;color:#fff;font-size:14.5px;margin-bottom:4px}
-  .deliver span{font-size:13px;color:#A9B8CA}
-  .nv .note{font-size:12px;color:#7C8CA0;text-align:center;margin:30px auto 0;max-width:760px}
-
-  /* solutions */
-  .ways{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-bottom:34px}
-  .way{border:1px solid var(--line);border-radius:var(--radius);padding:24px;background:#fff}
-  .way h3{font-size:19px;margin-bottom:6px}
-  .way p{font-size:14.5px;margin:0}
-  .scopes{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-  .scope{border:1px solid var(--line);border-radius:var(--radius);padding:18px;background:#F7F9FC}
-  .scope .lv{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--blue2)}
-  .scope h3{font-size:17px;margin:6px 0 4px}
-  .scope p{font-size:13.5px;margin:0}
-  .sub{text-align:center;font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
-
-  /* CTA band */
-  .cta-band{background:linear-gradient(90deg,#12233b,#0F1B2D);color:#fff;border-radius:20px;padding:48px;text-align:center}
-  .cta-band h2{color:#fff;font-size:30px}
-  .cta-band p{color:#C9D3E0;max-width:560px;margin:12px auto 24px}
-
-  /* footer */
-  footer{background:#0B1524;color:#8CA0B8;padding:46px 0 30px;font-size:14px}
-  .fgrid{display:flex;gap:40px;flex-wrap:wrap;justify-content:space-between}
-  footer h4{color:#E6EDF5;font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin:0 0 10px}
-  footer a{display:block;color:#93A4B8;padding:4px 0}
-  footer a:hover{color:#fff}
-  .foot-bottom{border-top:1px solid rgba(255,255,255,.08);margin-top:34px;padding-top:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:#6B7C90;font-size:12.5px}
-
-  /* demo form */
-  .demo-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:34px;align-items:center;text-align:left}
-  .demo-form{background:#fff;border-radius:14px;padding:22px}
-  .demo-form .ttl{color:#101828;font-weight:800;font-size:16px;margin-bottom:2px}
-  .demo-form label{display:block;font-size:12px;font-weight:700;color:#344054;margin:10px 0 4px}
-  .demo-form input,.demo-form select,.demo-form textarea{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:14px;font-family:var(--font);color:#101828}
-  .demo-form textarea{min-height:78px;resize:vertical}
-  .demo-status{font-size:13px;font-weight:600;margin-top:10px;min-height:18px}
-  @media(max-width:760px){.demo-grid{grid-template-columns:1fr}}
-  @media(max-width:900px){
-    .grid3,.steps,.prices,.mock .grid,.deliver,.scopes{grid-template-columns:1fr 1fr}
-    .hero h1{font-size:40px}
-    .navlinks{display:none}
-  }
-  @media(max-width:560px){
-    .grid3,.steps,.prices,.prices.two,.mock .grid,.deliver,.scopes,.gens,.ways{grid-template-columns:1fr}
-    .hero h1{font-size:32px}
-    section{padding:56px 0}
-  }
-</style>
+<title>SDVsolution: one engineering system for the software-defined vehicle</title>
+<meta name="description" content="SDVsolution takes a vehicle program from stakeholder need to integrated ECU software: requirements to Automotive SPICE, architecture and wiring cross-checks, ECU specifications, and code generated per feature, per ECU or for the complete vehicle." />
+<link rel="preload" href="assets/fonts/barlow-condensed-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="assets/site.css" />
 </head>
 <body>
-
-<header>
-  <div class="wrap nav">
-    <a class="brand" href="#top"><span class="logo">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0F1B2D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
-    </span>SDVsolution</a>
-    <nav class="navlinks">
-      <a href="#product">Product</a>
-      <a href="#nvidia">NVIDIA DRIVE</a>
-      <a href="#solutions">Solutions</a>
-      <a href="#flow">How it works</a>
-      <a href="#pricing">Plans</a>
-    </nav>
-    <div class="nav-cta">
-      <a class="login" href="https://app.sdvsolution.com">Login</a>
-      <a class="btn btn-accent" href="#demo">Request a demo</a>
-    </div>
-  </div>
-</header>
-
+<header class="top"><div class="wrap nav">
+  <a class="brand" href="#top" ><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" fill="#9CFF3A"/><g fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="square"><circle cx="18.5" cy="7" r="2.6"/><circle cx="7.5" cy="13" r="2.6"/><circle cx="18.5" cy="19" r="2.6"/><path d="M9.8 11.8l6.4-3.6M9.8 14.2l6.4 3.6"/></g></svg>SDVsolution</a>
+  <nav class="navlinks" aria-label="Main"><a href="platform.html" target="_blank" rel="noopener">Platform</a><a href="software-factory.html" target="_blank" rel="noopener">Software factory</a><a href="nvidia-drive.html" target="_blank" rel="noopener">NVIDIA DRIVE</a><a href="solutions.html" target="_blank" rel="noopener">Solutions and plans</a></nav>
+  <div class="nav-cta"><a class="login" href="https://app.sdvsolution.com" target="_blank" rel="noopener">Log in</a><a class="btn btn-lime" href="#demo">Request a demo</a></div>
+</div></header>
 <a id="top"></a>
-<section class="hero">
-  <div class="wrap">
-    <span class="pill">◆ Built for the Automotive SPICE V-model</span>
-    <h1>Requirements,<br/>done to the standard.</h1>
-    <p class="lead">The requirements platform for software-defined vehicles. Author, trace, review and verify system, software and hardware requirements — with a built-in ISO/IEC/IEEE 29148 quality gate, live traceability from stakeholder need to test, and an AI assistant that reads your specs and drafts requirements for your engineers to review.</p>
-    <div class="cta">
-      <a class="btn btn-accent" href="#demo">Request a demo</a>
-      <a class="btn btn-ghost" href="#demo">Contact</a>
-    </div>
-    <div class="fineprint">We walk you through the demo, then give your team access by email.</div>
-
-    <div class="mock">
-      <div class="bar"><span class="dot"></span><b>SDVsolution</b> <span style="color:#667085;font-size:12px">· Engineering Readiness</span></div>
-      <div class="grid">
-        <div class="mcard"><div class="k">SYSTEM · SYS.2</div><div class="v">1,271</div><div class="s">requirements</div><div class="mbar"><i style="width:100%;background:#175CD3"></i></div></div>
-        <div class="mcard"><div class="k">ISO 29148 GATE</div><div class="v">PASS</div><div class="s">EARS · verifiable · unambiguous</div><div class="mbar"><i style="width:100%;background:#12B76A"></i></div></div>
-        <div class="mcard"><div class="k">TRACEABILITY</div><div class="v">100%</div><div class="s">bidirectional, live</div><div class="mbar"><i style="width:100%;background:#7A5AF8"></i></div></div>
-        <div class="mcard"><div class="k">V&amp;V COVERAGE</div><div class="v">Live</div><div class="s">curated tests per requirement</div><div class="mbar"><i style="width:82%;background:#0E7090"></i></div></div>
-      </div>
-    </div>
+<section class="hero"><div class="wrap">
+  <div>
+    <h1>The whole vehicle, in one engineering system.</h1>
+    <p class="lead">SDVsolution takes a vehicle program from stakeholder need to integrated ECU software: requirements written to the standard, the architecture and wiring checked against each other, a specification for every ECU, and code generated feature by feature.</p>
+    <div class="cta"><a class="btn btn-lime" href="#demo">Request a demo</a><a class="btn btn-line" href="platform.html" target="_blank" rel="noopener">See the platform</a></div>
+    <p class="fine">We walk you through the demo, then give your team access by email.</p>
   </div>
-</section>
+  <div><svg class="topo" viewBox="0 0 640 470" role="img" aria-label="Vehicle topology: a central computer connected by Ethernet to front, center and rear zone controllers, which reach door, seat, lighting and climate units over CAN and LIN.">
+  <path class="bus d-eth" d="M320 92V150M320 150H110V196M320 150V196M320 150H530V196"/>
+  <path class="bus b2 d-can" d="M110 252V300M60 300H160M60 300V336M160 300V336M320 252V300M250 300H390M250 300V336M320 300V336M390 300V336M530 252V300M480 300H580M480 300V336M580 300V336"/>
+  <path class="bus b3 d-lin" d="M60 384V420M160 384V420M250 384V420M390 384V420M480 384V420M580 384V420"/>
+  <rect class="d-core" x="230" y="34" width="180" height="58"/><text class="d-t" x="320.0" y="61.0" text-anchor="middle">Central computer</text><text class="d-s" x="320.0" y="77.0" text-anchor="middle">driver assistance + cockpit</text>
+  <rect class="d-box" x="40" y="196" width="140" height="56"/><text class="d-t" x="110.0" y="222.0" text-anchor="middle">Front zone</text><text class="d-s" x="110.0" y="238.0" text-anchor="middle">climate, chassis</text>
+  <rect class="d-box" x="250" y="196" width="140" height="56"/><text class="d-t" x="320.0" y="222.0" text-anchor="middle">Center zone</text><text class="d-s" x="320.0" y="238.0" text-anchor="middle">body, access, power</text>
+  <rect class="d-box" x="460" y="196" width="140" height="56"/><text class="d-t" x="530.0" y="222.0" text-anchor="middle">Rear zone</text><text class="d-s" x="530.0" y="238.0" text-anchor="middle">tailgate, trailer</text>
+  <rect class="d-box" x="20" y="336" width="80" height="48"/><text class="d-t" x="60.0" y="365.0" text-anchor="middle">Wiper</text><rect class="d-box" x="120" y="336" width="80" height="48"/><text class="d-t" x="160.0" y="365.0" text-anchor="middle">Brake</text>
+  <rect class="d-box" x="212" y="336" width="76" height="48"/><text class="d-t" x="250.0" y="365.0" text-anchor="middle">Doors</text><rect class="d-box" x="292" y="336" width="56" height="48"/><text class="d-t" x="320.0" y="365.0" text-anchor="middle">Seats</text><rect class="d-box" x="352" y="336" width="76" height="48"/><text class="d-t" x="390.0" y="365.0" text-anchor="middle">Roof</text>
+  <rect class="d-box" x="440" y="336" width="80" height="48"/><text class="d-t" x="480.0" y="365.0" text-anchor="middle">Lighting</text><rect class="d-box" x="540" y="336" width="80" height="48"/><text class="d-t" x="580.0" y="365.0" text-anchor="middle">Tires</text>
+  <g class="d-s" text-anchor="middle"><text x="60" y="438">rain sensor</text><text x="160" y="438">wear sensor</text><text x="250" y="438">switch pack</text><text x="390" y="438">mirror</text><text x="480" y="438">ambient light</text><text x="580" y="438">parking lock</text></g>
+</svg>
+<div class="legend"><span><i style="background:var(--lime)"></i>Ethernet</span><span><i style="background:var(--can)"></i>CAN</span><span><i style="background:var(--lin)"></i>LIN</span></div></div>
+</div></section>
 
-<div class="standards" id="standards">
-  <div class="wrap row">
-    <span class="lbl">Aligned to the standards your customers require</span>
-    <span class="std">ISO/IEC/IEEE&nbsp;29148</span>
-    <span class="std">Automotive&nbsp;SPICE</span>
-    <span class="std">ISO&nbsp;26262</span>
-    <span class="std">ISO/SAE&nbsp;21434</span>
+<div class="strip"><div class="wrap"><span>Aligned to the standards your customers ask for</span><b>Automotive SPICE</b><b>ISO/IEC/IEEE 29148</b><b>ISO 26262</b><b>ISO/SAE 21434</b></div></div>
+
+<section class="band band-black" id="work"><div class="wrap">
+  <div class="head"><h2>What your team does in it</h2><p class="lead">Five jobs that usually live in five tools and a shared drive. Here they share one model, so a change in one shows up in the others.</p></div>
+  <div class="row"><figure class="art"><svg viewBox="0 0 520 300" role="img" aria-label="The V-model: stakeholder needs, system, software and hardware requirements going down the left side, and unit, integration and system tests coming up the right, each level traced across.">
+  <path class="d-thin" d="M150 62H370M190 122H330M230 182H290" stroke-dasharray="4 5"/>
+  <path class="d-wire d-eth" d="M40 40L250 262L470 40" opacity=".35"/>
+  <rect class="d-box" x="20" y="44" width="130" height="36"/><text class="d-t" x="85.0" y="67.0" text-anchor="middle">System requirements</text><rect class="d-box" x="370" y="44" width="130" height="36"/><text class="d-t" x="435.0" y="67.0" text-anchor="middle">System test</text>
+  <rect class="d-box" x="60" y="104" width="130" height="36"/><text class="d-t" x="125.0" y="127.0" text-anchor="middle">Architecture</text><rect class="d-box" x="330" y="104" width="130" height="36"/><text class="d-t" x="395.0" y="127.0" text-anchor="middle">Integration test</text>
+  <rect class="d-box" x="100" y="164" width="130" height="36"/><text class="d-t" x="165.0" y="187.0" text-anchor="middle">Software, hardware</text><rect class="d-box" x="290" y="164" width="130" height="36"/><text class="d-t" x="355.0" y="187.0" text-anchor="middle">Unit test</text>
+  <rect class="d-core" x="195" y="236" width="130" height="36"/><text class="d-t" x="260.0" y="259.0" text-anchor="middle">Code</text>
+  <g class="d-s" text-anchor="middle"><text x="260" y="58">traced</text><text x="260" y="118">traced</text><text x="260" y="178">traced</text></g>
+</svg></figure><div><h3>Write requirements that pass an assessment</h3><p>System, software and hardware requirements in one connected model, with architecture, detailed design and state machines beside them.</p><ul><li>Every requirement checked as you type: one statement, verifiable, unambiguous</li><li>Trace from stakeholder need to test, in both directions</li><li>Reviews, approvals and versioned baselines with diff and restore</li></ul><a class="more" href="platform.html#requirements" target="_blank" rel="noopener">How requirements work</a></div></div>
+  <div class="row flip"><figure class="art"><svg viewBox="0 0 520 300" role="img" aria-label="A pin table comparing the I/O list with the wiring drawing, pin by pin. One pin is flagged because the drawing puts the signal on a different pin.">
+  <text class="d-s" x="24" y="30">Pin</text><text class="d-s" x="92" y="30">I/O list</text><text class="d-s" x="290" y="30">Wiring drawing</text><text class="d-s" x="440" y="30">Match</text>
+  <path d="M24 40H496" stroke="#55636f" fill="none"/>
+  <text class="d-t" x="24" y="68">B19</text><text class="d-s" x="92" y="68" style="font-size:13px">Glove box switch</text><text class="d-s" x="290" y="68" style="font-size:13px">Glove box switch</text><rect class="d-ok" x="456" y="58" width="10" height="10"/><path class="d-thin" d="M24 80H496"/>
+  <text class="d-t" x="24" y="108">B21</text><text class="d-s" x="92" y="108" style="font-size:13px">Start button, contact 4</text><text class="d-s" x="290" y="108" style="font-size:13px">Start button, contact 4</text><rect class="d-ok" x="456" y="98" width="10" height="10"/><path class="d-thin" d="M24 120H496"/>
+  <text class="d-t" x="24" y="148">D8</text><text class="d-s" x="92" y="148" style="font-size:13px">Steering-wheel supply</text><text class="d-s" x="290" y="148" style="font-size:13px">Dashboard supply</text><rect x="456" y="138" width="10" height="10" fill="#FFB020"/><path class="d-thin" d="M24 160H496"/>
+  <text class="d-t" x="24" y="188">D14</text><text class="d-s" x="92" y="188" style="font-size:13px">Rear lighting CAN high</text><text class="d-s" x="290" y="188" style="font-size:13px">Rear lighting CAN high</text><rect class="d-ok" x="456" y="178" width="10" height="10"/><path class="d-thin" d="M24 200H496"/>
+  <text class="d-t" x="24" y="228">E9</text><text class="d-s" x="92" y="228" style="font-size:13px">Handle touch sensor</text><text class="d-s" x="290" y="228" style="font-size:13px">Handle touch sensor</text><rect class="d-ok" x="456" y="218" width="10" height="10"/><path class="d-thin" d="M24 240H496"/>
+  <text class="d-s" x="24" y="274">1 of 5 pins differs. The drawing wins, and the list is corrected.</text>
+</svg></figure><div><h3>Check the wiring against the I/O list</h3><p>Import the communication matrix and the wiring drawings. The platform traces every wire and compares it, pin by pin, with what each ECU says it provides.</p><ul><li>CAN, LIN, Ethernet and FlexRay from DBC, LDF and ARXML</li><li>Wiring drawings read from PDF, net by net</li><li>Wrong pins, unwired outputs and missing signals listed for you</li></ul><a class="more" href="platform.html#architecture" target="_blank" rel="noopener">How the cross-check works</a></div></div>
+  <div class="row"><figure class="art"><svg viewBox="0 0 520 300" role="img" aria-label="An ECU specification sheet with numbered requirements, each with a verification method, next to the ECU's connectors and buses.">
+  <rect class="d-box" x="20" y="20" width="290" height="260"/>
+  <text class="d-t" x="36" y="48">Door module, front left</text><text class="d-s" x="36" y="66">Requirement specification</text>
+  <path class="d-thin" d="M36 78H294"/>
+  <g class="d-s" style="font-size:12.5px"><text x="36" y="102">REQ-014  Door CAN, 500 kbit/s nominal</text><text x="36" y="128">REQ-027  Window anti-pinch reversal</text><text x="36" y="154">REQ-031  Latch status debounce</text><text x="36" y="180">REQ-044  Diagnostic session control</text><text x="36" y="206">REQ-052  Secure software update</text><text x="36" y="232">REQ-060  Quiescent current limit</text></g>
+  <g class="d-s"><text x="36" y="262">Each with an ID and a verification method</text></g>
+  <rect class="d-box" x="350" y="30" width="150" height="44"/><text class="d-t" x="425.0" y="50.0" text-anchor="middle">Connector A</text><text class="d-s" x="425.0" y="66.0" text-anchor="middle">window motor</text><rect class="d-box" x="350" y="92" width="150" height="44"/><text class="d-t" x="425.0" y="112.0" text-anchor="middle">Connector B</text><text class="d-s" x="425.0" y="128.0" text-anchor="middle">latch, CAN, supply</text><rect class="d-box" x="350" y="154" width="150" height="44"/><text class="d-t" x="425.0" y="174.0" text-anchor="middle">Connector C</text><text class="d-s" x="425.0" y="190.0" text-anchor="middle">mirror</text><rect class="d-box" x="350" y="216" width="150" height="44"/><text class="d-t" x="425.0" y="236.0" text-anchor="middle">Connector D</text><text class="d-s" x="425.0" y="252.0" text-anchor="middle">switches</text>
+  <path class="d-wire d-can" d="M310 114H350"/><path class="d-thin" d="M310 52H350M310 176H350M310 238H350"/>
+</svg></figure><div><h3>Hand each supplier a complete ECU specification</h3><p>A specification for every ECU, built from its own buses, connectors and safety level, so the supplier gets requirements that match the vehicle it goes into.</p><ul><li>Hardware, software, diagnostics, update, cybersecurity and verification</li><li>Connector pin-outs and I/O lists per ECU</li><li>Every requirement with an ID and a verification method</li></ul><a class="more" href="platform.html#ecu" target="_blank" rel="noopener">What an ECU specification holds</a></div></div>
+  <div class="row flip"><figure class="art"><svg viewBox="0 0 520 300" role="img" aria-label="A behavior model becomes C code and unit tests for one feature. The features deployed on one ECU are integrated into that ECU's software, and the ECUs into the vehicle package.">
+  <rect class="d-box" x="20" y="30" width="130" height="50"/><text class="d-t" x="85.0" y="53.0" text-anchor="middle">Behavior model</text><text class="d-s" x="85.0" y="69.0" text-anchor="middle">states, signals</text>
+  <path class="d-wire d-eth" d="M150 55H190"/>
+  <rect class="d-core" x="190" y="20" width="310" height="110"/>
+  <g class="d-code" xml:space="preserve"><text x="204" y="44">void MirrorFold_Step(void) {</text><text x="204" y="62">  switch (state) {</text><text x="204" y="80">    case FOLDING:</text><text x="204" y="98">      if (t_ms &gt;= CAL_FOLD_MS)</text><text x="204" y="116">        state = FOLDED;</text></g>
+  <path class="d-wire d-eth" d="M345 130V166"/>
+  <rect class="d-box" x="40" y="166" width="130" height="46"/><text class="d-t" x="105.0" y="187.0" text-anchor="middle">Feature</text><text class="d-s" x="105.0" y="203.0" text-anchor="middle">code + unit tests</text><rect class="d-box" x="195" y="166" width="130" height="46"/><text class="d-t" x="260.0" y="187.0" text-anchor="middle">Feature</text><text class="d-s" x="260.0" y="203.0" text-anchor="middle">code + unit tests</text><rect class="d-box" x="350" y="166" width="130" height="46"/><text class="d-t" x="415.0" y="187.0" text-anchor="middle">Feature</text><text class="d-s" x="415.0" y="203.0" text-anchor="middle">code + unit tests</text>
+  <path class="d-wire d-can" d="M105 212V236H415V212M260 212V236M260 236V250"/>
+  <rect class="d-core" x="170" y="250" width="180" height="40"/><text class="d-t" x="260.0" y="275.0" text-anchor="middle">ECU software, integrated</text>
+</svg></figure><div><h3>Generate the software, feature by feature</h3><p>Describe a feature as a behavior model. The software factory writes its C code and unit tests, then integrates the features deployed on each ECU into that ECU's software.</p><ul><li>C code and unit tests per feature</li><li>ECU integration: signal routing, schedule, integration test</li><li>The complete vehicle as one package, ECU by ECU</li></ul><a class="more" href="software-factory.html" target="_blank" rel="noopener">How the software factory works</a></div></div>
+  <div class="row"><figure class="art"><svg viewBox="0 0 520 300" role="img" aria-label="A release board listing each ECU with how much of its software delivery is signed off for the vehicle release.">
+  <text class="d-s" x="24" y="30">Vehicle release, ECU by ECU</text><path d="M24 40H496" stroke="#55636f" fill="none"/>
+  <text class="d-t" x="24" y="76">Center zone</text><rect x="170" y="64" width="250" height="12" fill="#26323D"/><rect class="d-ok" x="170" y="64" width="250" height="12"/><text class="d-s" x="434" y="76" style="font-size:13px">signed off</text><text class="d-t" x="24" y="116">Front zone</text><rect x="170" y="104" width="250" height="12" fill="#26323D"/><rect class="d-ok" x="170" y="104" width="250" height="12"/><text class="d-s" x="434" y="116" style="font-size:13px">signed off</text><text class="d-t" x="24" y="156">Door modules</text><rect x="170" y="144" width="250" height="12" fill="#26323D"/><rect class="d-ok" x="170" y="144" width="205" height="12"/><text class="d-s" x="434" y="156" style="font-size:13px">2 open</text><text class="d-t" x="24" y="196">Seat modules</text><rect x="170" y="184" width="250" height="12" fill="#26323D"/><rect class="d-ok" x="170" y="184" width="150" height="12"/><text class="d-s" x="434" y="196" style="font-size:13px">4 open</text><text class="d-t" x="24" y="236">Brake control</text><rect x="170" y="224" width="250" height="12" fill="#26323D"/><rect class="d-ok" x="170" y="224" width="95" height="12"/><text class="d-s" x="434" y="236" style="font-size:13px">evidence due</text>
+  <text class="d-s" x="24" y="274">What blocks the release is on one screen.</text>
+</svg></figure><div><h3>Know which ECUs are ready for the release</h3><p>Every ECU delivers against a common vehicle release. Track each deliverable with its evidence and sign off ECU by ECU.</p><ul><li>Deliverables and evidence per ECU</li><li>Sign-off per ECU and per release</li><li>Safety, cybersecurity and review status on one dashboard</li></ul><a class="more" href="platform.html#release" target="_blank" rel="noopener">How release tracking works</a></div></div>
+</div></section>
+
+<section class="band on-paper" id="parts"><div class="wrap">
+  <div class="head"><h2>Six parts, one system</h2><p class="lead">Each part does one job. They share the same vehicle model, which is what lets the software factory generate code from the requirements your engineers approved.</p></div>
+  <div class="blocks">
+    <div class="block"><h3>AI platform</h3><p>The assistant your engineers talk to. Drop in a PDF, a spreadsheet or a bus file and ask in plain language.</p></div>
+    <div class="block"><h3>Engineering knowledge graph</h3><p>Features, requirements, signals, pins, ECUs and tests as one connected model. Click anything to see what it depends on.</p></div>
+    <div class="block"><h3>AI agents</h3><p>They draft requirements, propose behavior models and review them against the standard. Your engineers approve every result.</p></div>
+    <div class="block"><h3>AI software factory</h3><p>Turns an approved behavior model into C code and unit tests, one feature at a time.</p></div>
+    <div class="block"><h3>ECU platform</h3><p>The specification, the I/O list and the integrated software for each ECU in the vehicle.</p></div>
+    <div class="block"><h3>AI system integration</h3><p>Checks the signals between ECUs and assembles the complete vehicle software, ready for the bench.</p></div>
   </div>
-</div>
+</div></section>
 
-<section id="product">
-  <div class="wrap">
-    <div class="center">
-      <div class="eyebrow">Product</div>
-      <h2>One platform, the whole V.</h2>
-      <p class="muted">From stakeholder needs to verified software and hardware — with the rigor auditors expect and the speed teams want.</p>
-    </div>
-    <div class="grid3">
-      <div class="feat"><div class="ic" style="background:#F4F3FF;color:#7A5AF8">✦</div><h3>AI assistant</h3><p class="muted">Drop a PDF, Excel, Word or DBC/LDF/ARXML file and ask in plain language. It reads the file, answers grounded in your live model, and drafts requirements and updates — which your engineers review and approve. The assistant supports your team; it doesn't replace engineering judgment.</p></div>
-      <div class="feat"><div class="ic" style="background:#EAF2FF;color:#175CD3">▤</div><h3>End-to-end V-model</h3><p class="muted">System (SYS.2–5), software (SWE.1–6) and hardware (HWE.1–4) requirements with architecture, detailed design and state machines — one connected model.</p></div>
-      <div class="feat"><div class="ic" style="background:#ECFDFF;color:#0E7090">✓</div><h3>ISO 29148 quality gate</h3><p class="muted">Every requirement checked live for EARS syntax, verifiability, singularity and unambiguity — quality built in, not bolted on.</p></div>
-      <div class="feat"><div class="ic" style="background:#F4F3FF;color:#7A5AF8">⇄</div><h3>Live traceability &amp; impact</h3><p class="muted">Click any requirement or signal and see everything it derives from and everything a change would affect — up and down the V.</p></div>
-      <div class="feat"><div class="ic" style="background:#ECFDF3;color:#067647">◷</div><h3>Reviews &amp; baselines</h3><p class="muted">Joint-review workflow (SUP.4), approvals, and versioned baselines with diff and restore (SUP.8/10) — real configuration management.</p></div>
-      <div class="feat"><div class="ic" style="background:#FEF3F2;color:#B42318">◎</div><h3>Engineering readiness</h3><p class="muted">A live dashboard of your program across the V — safety, cybersecurity, review status and the quality gate, recomputed as you work.</p></div>
-      <div class="feat"><div class="ic" style="background:#EAF2FF;color:#175CD3">▦</div><h3>Vehicle architecture &amp; communication</h3><p class="muted">The vehicle topology, the CAN, LIN and Ethernet communication matrix, connector pin-outs and I/O lists in one model — imported from DBC, LDF and ARXML and checked against each other.</p></div>
-      <div class="feat"><div class="ic" style="background:#ECFDFF;color:#0E7090">▣</div><h3>ECU requirement specifications</h3><p class="muted">A specification for every ECU, generated from its own buses, interfaces and safety level: hardware constraints, software, diagnostics, update, cybersecurity and verification — each requirement with an ID and a verification method.</p></div>
-      <div class="feat"><div class="ic" style="background:#ECFDF3;color:#067647">⚑</div><h3>Release readiness</h3><p class="muted">Every ECU delivers against a common vehicle release. Track each software deliverable with its evidence, sign off per ECU, and see which ECUs are ready and what blocks the rest.</p></div>
-    </div>
+<section class="band band-ink" id="nvidia"><div class="wrap">
+  <div class="head"><p class="kicker">Built for NVIDIA DRIVE AGX Thor</p><h2>Bring the NVIDIA DRIVE hardware. Integrate the complete vehicle faster.</h2><p class="lead">You choose NVIDIA DRIVE AGX Thor for central compute. SDVsolution brings the vehicle around it: the architecture, the communication, the ECU specifications and the release tracking that connect the computer to every other ECU.</p></div>
+  <div class="gens">
+    <div class="gen"><div class="tag">Generation 1</div><h3>Driver assistance on NVIDIA DRIVE AGX Thor</h3><p>The driver-assistance ECU is built on Thor. The cockpit keeps its own computer and the zone controllers stay as they are.</p></div>
+    <div class="gen"><div class="tag">Generation 2</div><h3>Driver assistance and cockpit on one Thor</h3><p>Both run on a single Thor-based central computer, with the zone controllers around it.</p></div>
   </div>
-</section>
+  <p style="margin-top:34px"><a class="more" href="nvidia-drive.html" target="_blank" rel="noopener">See both architectures in detail</a></p>
+  <p class="legal">NVIDIA and NVIDIA DRIVE are trademarks of NVIDIA Corporation. SDVsolution is an independent company and is not affiliated with, sponsored by or endorsed by NVIDIA.</p>
+</div></section>
 
-<section class="nv" id="nvidia">
-  <div class="wrap">
-    <div class="center">
-      <div class="eyebrow">Built for NVIDIA DRIVE AGX Thor</div>
-      <h2>Bring the NVIDIA DRIVE hardware. Integrate the complete vehicle faster.</h2>
-      <p>You choose NVIDIA DRIVE AGX Thor for central compute. SDVsolution brings the vehicle around it: the architecture, the communication, the ECU specifications and the release tracking that connect the computer to every other ECU.</p>
-    </div>
-    <div class="gens">
-      <div class="gen">
-        <span class="tagline">GEN 1</span>
-        <h3>ADAS on NVIDIA DRIVE AGX Thor</h3>
-        <p>The ADAS ECU is built on NVIDIA DRIVE AGX Thor. The cockpit keeps its own computer, and the zonal controllers stay as they are.</p>
-        <ul><li>The lowest-change path onto NVIDIA DRIVE</li><li>ADAS interfaces, cameras, radars and ultrasonic sensors modelled</li><li>Available as a ready-made project in SDVsolution</li></ul>
-      </div>
-      <div class="gen">
-        <span class="tagline">GEN 2</span>
-        <h3>ADAS and cockpit on one NVIDIA DRIVE AGX Thor</h3>
-        <p>ADAS and cockpit run on a single Thor-based central computer, with the zonal controllers around it.</p>
-        <ul><li>One central computer in place of two</li><li>ADAS and cockpit interfaces on one ECU specification</li><li>Available as a ready-made project in SDVsolution</li></ul>
-      </div>
-    </div>
-    <div class="deliver">
-      <div><b>Vehicle architecture</b><span>The topology around the central computer: zonal controllers, sensors, actuators and power distribution.</span></div>
-      <div><b>Communication matrix</b><span>CAN, LIN and Ethernet frames and signals for every ECU, with the interface requirements derived from them.</span></div>
-      <div><b>ECU specifications</b><span>A requirement specification for each ECU in the vehicle, ready to hand to its supplier.</span></div>
-      <div><b>Release tracking</b><span>Software delivery, evidence and sign-off for every ECU against each vehicle release.</span></div>
-    </div>
-    <div style="text-align:center;margin-top:34px"><a class="btn btn-accent" href="#demo">Request an NVIDIA DRIVE walkthrough</a></div>
-    <p class="note">NVIDIA and NVIDIA DRIVE are trademarks of NVIDIA Corporation. SDVsolution is an independent company and is not affiliated with, sponsored by or endorsed by NVIDIA.</p>
+<section class="band band-black" id="flow"><div class="wrap">
+  <div class="head"><h2>From a need to running software</h2></div>
+  <div class="steps five">
+    <div class="step"><h3>Capture</h3><p>Turn stakeholder needs into system requirements with a guided template.</p></div>
+    <div class="step"><h3>Derive</h3><p>Roll them down to software and hardware, and allocate each feature to its ECUs.</p></div>
+    <div class="step"><h3>Model</h3><p>Describe each feature's behavior: states, signals, timing and calibration.</p></div>
+    <div class="step"><h3>Generate</h3><p>Produce the code and tests for each feature and integrate them per ECU.</p></div>
+    <div class="step"><h3>Release</h3><p>Review, baseline, and sign off each ECU against the vehicle release.</p></div>
   </div>
-</section>
+</div></section>
 
-<section id="solutions">
-  <div class="wrap">
-    <div class="center">
-      <div class="eyebrow">Solutions</div>
-      <h2>License what you need, from one feature to the full stack.</h2>
-      <p class="muted">Two ways to work with SDVsolution, at the scope that fits your program.</p>
-    </div>
-    <div class="ways">
-      <div class="way"><h3>Full-stack integration</h3><p class="muted">SDVsolution takes the vehicle side end to end: requirements, software and ECU integration across the complete vehicle, delivered against your vehicle releases.</p></div>
-      <div class="way"><h3>Tool license</h3><p class="muted">Your engineering stays in house. Your teams work in the SDVsolution platform under a license, with support from us as you need it.</p></div>
-    </div>
-    <p class="sub">Licensed solutions, by scope</p>
-    <div class="scopes">
-      <div class="scope"><div class="lv">SCOPE 1</div><h3>Feature</h3><p class="muted">One vehicle feature, end to end: its requirements, behavior model, software and tests.</p></div>
-      <div class="scope"><div class="lv">SCOPE 2</div><h3>Sub-system</h3><p class="muted">A group of related features and the ECUs that deliver them, such as exterior lighting.</p></div>
-      <div class="scope"><div class="lv">SCOPE 3</div><h3>Domain</h3><p class="muted">A complete vehicle domain, such as body, energy, infotainment or driver assistance.</p></div>
-      <div class="scope"><div class="lv">SCOPE 4</div><h3>Full stack</h3><p class="muted">The complete vehicle: every domain, every ECU and the integration between them.</p></div>
-    </div>
+<section class="band on-paper" id="solutions"><div class="wrap">
+  <div class="head"><h2>License one feature, one ECU or the whole vehicle</h2><p class="lead">Take the generated software at the size your program needs, or license the platform and keep the engineering in house.</p></div>
+  <div class="scopes">
+    <div class="scope"><div class="bar" style="width:25%"></div><h3>Feature</h3><p>One vehicle feature: its requirements, behavior model, code and tests.</p></div>
+    <div class="scope"><div class="bar" style="width:50%"></div><h3>ECU</h3><p>Every feature deployed on one ECU, integrated into that ECU's software.</p></div>
+    <div class="scope"><div class="bar" style="width:75%"></div><h3>Domain</h3><p>A complete domain, such as body, energy, cockpit or driver assistance.</p></div>
+    <div class="scope"><div class="bar" style="width:100%"></div><h3>Complete vehicle</h3><p>Every ECU and the integration between them, with bench, HIL and lab-car support.</p></div>
   </div>
-</section>
-
-<section class="flow" id="flow">
-  <div class="wrap">
-    <div class="center">
-      <div class="eyebrow">How it works</div>
-      <h2>Get to a defensible baseline, fast.</h2>
-    </div>
-    <div class="steps">
-      <div class="step"><div class="n">1</div><h3>Capture</h3><p class="muted">Elicit stakeholder needs and structure them into system requirements using the guided EARS template.</p></div>
-      <div class="step"><div class="n">2</div><h3>Derive</h3><p class="muted">Roll requirements down to software and hardware with architecture, detailed design and allocation to ECUs.</p></div>
-      <div class="step"><div class="n">3</div><h3>Verify</h3><p class="muted">Attach measurable acceptance criteria and test cases; the quality gate keeps every requirement testable.</p></div>
-      <div class="step"><div class="n">4</div><h3>Review &amp; baseline</h3><p class="muted">Approve through the review board, freeze a baseline, and export the SyRS/SRS and comm matrix.</p></div>
-    </div>
+  <p style="margin-top:34px"><a class="more" href="solutions.html" target="_blank" rel="noopener">Compare the ways to work with us, and the plans</a></p>
+</div></section>
+<section class="band band-ink" id="demo"><div class="wrap contact">
+  <div>
+    <h2>See it on a real vehicle feature.</h2>
+    <p class="lead">Request a demo, ask about an NVIDIA DRIVE integration, or get a quote for your scope. We reply by email.</p>
+    <ul class="pts">
+      <li>A walkthrough with our team, on a sample feature from requirement to test</li>
+      <li>Then access for your team, by email</li>
+      <li>A quote scoped to a feature, a sub-system, a domain or the full stack</li>
+    </ul>
   </div>
-</section>
-
-<section id="easy" style="background:#0B1524">
-  <div class="wrap" style="text-align:center;max-width:820px">
-    <div class="eyebrow" style="color:#9CFF3A">No training required</div>
-    <h2 style="color:#fff;font-size:34px;margin-top:10px">If you've used a requirements tool, you already know this one.</h2>
-    <p style="color:#C9D3E0;font-size:17px;margin:16px auto 0">SDVsolution works the way engineers expect — a familiar tree, a document-style reader, and simple import/export. There's nothing to learn before you start. And whenever a question comes up, the built-in AI assistant answers it right inside the app, in plain language.</p>
-    <p style="color:#8CA0B8;font-size:14px;margin-top:14px">Sign in and start authoring — no onboarding, no setup course.</p>
+  <form class="demo" id="demoForm" action="https://formspree.io/f/xljrqwaw" method="POST">
+    <div class="ttl">Request a demo or contact us</div>
+    <label for="df-name">Name</label><input id="df-name" name="name" required autocomplete="name" />
+    <label for="df-email">Work email</label><input id="df-email" type="email" name="email" required autocomplete="email" placeholder="you@company.com" />
+    <label for="df-company">Company</label><input id="df-company" name="company" autocomplete="organization" />
+    <label for="df-team">Team size</label><select id="df-team" name="team_size"><option>1–5</option><option>6–20</option><option>21–100</option><option>100+</option></select>
+    <label for="df-interest">I'm interested in</label><select id="df-interest" name="interest"><option>A demo</option><option>NVIDIA DRIVE AGX Thor integration</option><option>Generated software for a feature</option><option>Generated software for an ECU</option><option>The complete vehicle software</option><option>A license for a sub-system or domain</option><option>A tool license</option><option>Something else</option></select>
+    <label for="df-msg">What would you like to see?</label><textarea id="df-msg" name="message"></textarea>
+    <input type="hidden" name="_subject" value="SDVsolution contact request" />
+    <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+    <button class="btn btn-lime" type="submit">Send request</button>
+    <div class="status" id="demoStatus" role="status" aria-live="polite"></div>
+  </form>
+</div></section>
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div><div class="brand" style="margin-bottom:12px"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" fill="#9CFF3A"/><g fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="square"><circle cx="18.5" cy="7" r="2.6"/><circle cx="7.5" cy="13" r="2.6"/><circle cx="18.5" cy="19" r="2.6"/><path d="M9.8 11.8l6.4-3.6M9.8 14.2l6.4 3.6"/></g></svg>SDVsolution</div><p style="max-width:34ch">One engineering system for the software-defined vehicle, from the first requirement to the integrated vehicle software.</p></div>
+    <div><h4>Product</h4><a href="platform.html" target="_blank" rel="noopener">Platform</a><a href="software-factory.html" target="_blank" rel="noopener">Software factory</a><a href="nvidia-drive.html" target="_blank" rel="noopener">NVIDIA DRIVE</a><a href="solutions.html" target="_blank" rel="noopener">Solutions and plans</a></div>
+    <div><h4>Company</h4><a href="#demo">Contact</a><a href="https://www.linkedin.com/company/sdvsolution/" target="_blank" rel="noopener">LinkedIn</a><a href="https://app.sdvsolution.com" target="_blank" rel="noopener">Log in</a></div>
+    <div><h4>Legal</h4><a href="terms.html" target="_blank" rel="noopener">Terms of Service</a><a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a></div>
   </div>
-</section>
-
-<section id="pricing">
-  <div class="wrap">
-    <div class="center">
-      <div class="eyebrow">Plans</div>
-      <h2>Start with the demo. License what you need.</h2>
-      <p class="muted">We show you the demo and give your team access by email. When you are ready, we scope a license to your program and price it by quote.</p>
-    </div>
-    <div class="prices two">
-      <div class="price">
-        <h3>Demo</h3>
-        <div class="desc">See a sample feature, end to end.</div>
-        <div class="amt">Free</div><div class="per">by request · access by email</div>
-        <ul><li>A walkthrough with our team</li><li>Then access for your team, by email</li><li>A sample feature, end to end: SYS → SWE → HWE</li><li>4 Door Control Modules (ECUs)</li></ul>
-        <a class="btn btn-outline" href="#demo">Request a demo</a>
-      </div>
-      <div class="price pop">
-        <span class="tag">For your program</span>
-        <h3>Custom</h3>
-        <div class="desc">Scoped to your program and priced by quote.</div>
-        <div class="amt">Custom</div><div class="per">priced by quote</div>
-        <ul><li>Feature, sub-system, domain or full-stack scope</li><li>Full-stack integration or a tool license</li><li>NVIDIA DRIVE AGX Thor architectures (Gen 1, Gen 2)</li><li>All platform features, unlimited requirements &amp; projects</li><li>K-Matrix comm matrix · ARXML/DBC/LDF · connector pin-outs</li><li>DOORS · Polarion · Codebeamer · custom integrations</li><li>SSO · access controls · audit trail · SLA · ASPICE-assessment support</li></ul>
-        <a class="btn btn-primary" href="#demo">Contact sales</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="demo">
-  <div class="wrap">
-    <div class="cta-band" style="text-align:left">
-      <div class="demo-grid">
-        <div>
-          <h2>Ship requirements your assessor will trust.</h2>
-          <p style="margin:12px 0 20px">Request a demo, ask about an NVIDIA DRIVE integration, or get a quote for your scope. We reply by email.</p>
-        </div>
-        <form class="demo-form" id="demoForm" action="https://formspree.io/f/xljrqwaw" method="POST">
-          <div class="ttl">Request a demo or contact us</div>
-          <label for="df-name">Name</label>
-          <input id="df-name" name="name" required autocomplete="name" />
-          <label for="df-email">Work email</label>
-          <input id="df-email" type="email" name="email" required autocomplete="email" placeholder="you@company.com" />
-          <label for="df-company">Company</label>
-          <input id="df-company" name="company" autocomplete="organization" />
-          <label for="df-team">Team size</label>
-          <select id="df-team" name="team_size"><option>1–5</option><option>6–20</option><option>21–100</option><option>100+</option></select>
-          <label for="df-interest">I'm interested in</label>
-          <select id="df-interest" name="interest"><option>A demo</option><option>NVIDIA DRIVE AGX Thor integration</option><option>A license for a feature</option><option>A license for a sub-system</option><option>A license for a domain</option><option>A full-stack license</option><option>A tool license</option><option>Something else</option></select>
-          <label for="df-msg">What would you like to see?</label>
-          <textarea id="df-msg" name="message"></textarea>
-          <input type="hidden" name="_subject" value="SDVsolution contact request" />
-          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-          <button class="btn btn-primary" type="submit" style="width:100%;margin-top:14px;justify-content:center">Send request</button>
-          <div class="demo-status" id="demoStatus" role="status" aria-live="polite"></div>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <div class="fgrid">
-      <div style="max-width:280px">
-        <div class="brand" style="margin-bottom:10px"><span class="logo"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0F1B2D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></span>SDVsolution</div>
-        <p style="color:#7C8CA0;font-size:13.5px;margin:0 0 12px">The requirements platform for software-defined vehicles.</p>
-        <a href="https://www.linkedin.com/company/sdvsolution/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:#C9D3E0;border:1px solid rgba(255,255,255,.16);border-radius:8px;padding:7px 12px">Follow us on LinkedIn →</a>
-      </div>
-      <div><h4>Product</h4><a href="#product">Overview</a><a href="#nvidia">NVIDIA DRIVE</a><a href="#solutions">Solutions</a><a href="#flow">How it works</a><a href="#pricing">Plans</a><a href="#standards">Standards</a></div>
-      <div><h4>Company</h4><a href="#">About</a><a href="#demo">Contact</a><a href="https://www.linkedin.com/company/sdvsolution/" target="_blank" rel="noopener">LinkedIn</a></div>
-      <div><h4>Legal</h4><a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy Policy</a></div>
-    </div>
-    <div class="foot-bottom">
-      <span>© 2026 SDVsolution. All rights reserved.</span>
-      <span>ISO/IEC/IEEE 29148 · Automotive SPICE · ISO 26262 · ISO/SAE 21434</span>
-    </div>
-    <div style="color:#55657A;font-size:11.5px;margin-top:10px">NVIDIA and NVIDIA DRIVE are trademarks of NVIDIA Corporation. SDVsolution is not affiliated with, sponsored by or endorsed by NVIDIA.</div>
-  </div>
-</footer>
-
-<script>
-(function(){
-  var f=document.getElementById('demoForm'), s=document.getElementById('demoStatus');
-  if(!f) return;
-  f.addEventListener('submit', function(e){
-    e.preventDefault();
-    s.style.color='#667085'; s.textContent='Sending…';
-    fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(function(r){
-      if(r.ok){ f.reset(); s.style.color='#067647'; s.textContent="Thanks — we'll be in touch shortly."; }
-      else { r.json().then(function(j){ s.style.color='#B42318'; s.textContent=(j.errors&&j.errors.map(function(x){return x.message;}).join(', '))||'Something went wrong. Please try again.'; }).catch(function(){ s.style.color='#B42318'; s.textContent='Something went wrong. Please try again.'; }); }
-    }).catch(function(){ s.style.color='#B42318'; s.textContent='Network error. Please try again.'; });
-  });
-})();
-</script>
+  <div class="fbot"><span>© 2026 SDVsolution. All rights reserved.</span><span>NVIDIA and NVIDIA DRIVE are trademarks of NVIDIA Corporation. SDVsolution is not affiliated with, sponsored by or endorsed by NVIDIA.</span></div>
+</div></footer>
+<script src="assets/site.js"></script>
 </body>
 </html>
