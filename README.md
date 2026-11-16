@@ -50,12 +50,12 @@ The demo form is wired for **Formspree** (works on static hosts like GitHub Page
 3. Submissions are sent by AJAX; the page shows an inline "Thanks…" message (no redirect). A honeypot field (`_gotcha`) reduces spam.
 4. Until you set the endpoint, submitting shows a "not connected yet" note instead of failing silently.
 
-Prefer email only? Replace the form with `<a href="mailto:alba.shaska@sdvsolution.com">`. Other backends (Getform, Basin, Netlify Forms) work the same way — just change the `action`.
+Prefer email only? Replace the form with `<a href="mailto:contact@sdvsolution.com">`. Other backends (Getform, Basin, Netlify Forms) work the same way — just change the `action`.
 
 ## Before launch — wire these links in `index.html`
 - **Request a demo / Contact sales** buttons → the contact form (`#demo`); **Login** → the app.
 - **Login** → your app login URL.
-- **Book a demo** → a form or `mailto:alba.shaska@sdvsolution.com`.
+- **Book a demo** → a form or `mailto:contact@sdvsolution.com`.
 - **Terms / Privacy / Security** footer links → real pages.
 
 ## Edit
