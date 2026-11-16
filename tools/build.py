@@ -328,22 +328,29 @@ page("software-factory.html", "Software factory | SDVsolution", "The SDVsolution
 
 # ------------------------------------------------------------------ NVIDIA DRIVE
 def gen_svg(two):
-    cc = box(210, 100, 220, 56, "NVIDIA DRIVE AGX Thor", "driver assistance + cockpit" if two else "driver assistance", True)
-    cockpit = "" if two else box(470, 100, 150, 56, "Cockpit computer", "its own unit")
-    link = "" if two else '<path class="d-wire d-eth" d="M430 128H470"/>'
-    conn = box(230, 20, 180, 46, "Connectivity", "5G, Wi-Fi, positioning") + '<path class="d-wire d-eth" d="M320 66V100"/>' if two else box(470, 20, 150, 46, "Connectivity", "5G, Wi-Fi, positioning") + '<path class="d-wire d-eth" d="M545 66V100"/>'
-    return f'''<svg viewBox="0 0 640 370" role="img" aria-label="{"A connectivity unit above one Thor-based central computer for driver assistance and cockpit" if two else "A Thor-based driver-assistance computer beside a separate cockpit computer, which carries the connectivity unit"}, connected by Ethernet to the front zone and the center zone, with cameras, radars and displays.">
-  <path class="d-wire d-eth" d="M320 156V200M320 200H170V240M320 200H470V240"/>{link}
-  <path class="d-wire d-can" d="M170 292V320M470 292V320"/>
-  {conn}{cc}{cockpit}
-  {box(20, 100, 150, 56, "Cameras, radars", "ultrasonic sensors")}<path class="d-wire d-eth" d="M170 128H210"/>
+    zones = f'''<path class="d-wire d-can" d="M170 292V320M470 292V320"/>
   {box(90, 240, 160, 52, "Front zone")}{box(380, 240, 180, 52, "Center zone")}
-  <g class="d-s" text-anchor="middle"><text x="170" y="338">climate, chassis</text><text x="470" y="338">body, energy: doors, seats, lighting, tailgate</text></g>
+  <g class="d-s" text-anchor="middle"><text x="170" y="338">climate, chassis</text><text x="470" y="338">body, energy: doors, seats, lighting, tailgate</text></g>'''
+    if two:
+        return f'''<svg viewBox="0 0 640 370" role="img" aria-label="Generation 2: a connectivity unit above one Thor-based central computer for driver assistance and cockpit. The central computer connects by Ethernet to the front zone and the center zone, and to the cameras, radars and ultrasonic sensors.">
+  <path class="d-wire d-eth" d="M320 66V100M320 156V200M320 200H170V240M320 200H470V240M170 128H210"/>
+  {box(230, 20, 180, 46, "Connectivity", "5G, Wi-Fi, positioning")}
+  {box(210, 100, 220, 56, "NVIDIA DRIVE AGX Thor", "driver assistance + cockpit", True)}
+  {box(20, 100, 150, 56, "Cameras, radars", "ultrasonic sensors")}
+  {zones}
+</svg>'''
+    return f'''<svg viewBox="0 0 640 370" role="img" aria-label="Generation 1: the cockpit computer in the center, with a connectivity unit above it. The cockpit computer connects by Ethernet to the front zone, the center zone and the Thor-based driver-assistance computer, which has the cameras, radars and ultrasonic sensors.">
+  <path class="d-wire d-eth" d="M320 66V100M320 156V200M320 200H170V240M320 200H470V240M430 128H460M540 66V100"/>
+  {box(230, 20, 180, 46, "Connectivity", "5G, Wi-Fi, positioning")}
+  {box(210, 100, 220, 56, "Cockpit computer", "its own unit")}
+  {box(460, 100, 160, 56, "NVIDIA DRIVE AGX Thor", "driver assistance", True)}
+  {box(460, 20, 160, 46, "Cameras, radars", "ultrasonic sensors")}
+  {zones}
 </svg>'''
 
 nvidia = phero("NVIDIA DRIVE", "The vehicle around NVIDIA DRIVE AGX Thor.", "Choosing the central computer is one decision. Connecting it to the dozens of other ECUs in the vehicle is the larger job. SDVsolution models that vehicle for you, in two ready-made architectures.") + f'''
 <section class="band band-black"><div class="wrap">
-  <div class="row"><figure class="art">{gen_svg(False)}<figcaption>Generation 1</figcaption></figure><div><h3>Generation 1: driver assistance on Thor</h3><p>The driver-assistance ECU is built on NVIDIA DRIVE AGX Thor. The cockpit keeps its own computer and the zone controllers stay as they are.</p><ul><li>The lowest-change path onto NVIDIA DRIVE</li><li>Connectivity (5G, Wi-Fi, positioning) stays on the cockpit computer</li><li>Driver-assistance interfaces, cameras, radars and ultrasonic sensors modeled</li><li>Available as a ready-made project in SDVsolution</li></ul></div></div>
+  <div class="row"><figure class="art">{gen_svg(False)}<figcaption>Generation 1</figcaption></figure><div><h3>Generation 1: driver assistance on Thor</h3><p>The driver-assistance ECU is built on NVIDIA DRIVE AGX Thor. The cockpit keeps its own computer and the zone controllers stay as they are.</p><ul><li>The lowest-change path onto NVIDIA DRIVE</li><li>The cockpit computer stays at the center, on Ethernet with the front zone, the center zone and Thor</li><li>Connectivity (5G, Wi-Fi, positioning) stays on the cockpit computer</li><li>Driver-assistance interfaces, cameras, radars and ultrasonic sensors modeled</li><li>Available as a ready-made project in SDVsolution</li></ul></div></div>
   <div class="row flip"><figure class="art">{gen_svg(True)}<figcaption>Generation 2</figcaption></figure><div><h3>Generation 2: driver assistance and cockpit on one Thor</h3><p>Both functions run on a single Thor-based central computer, with the zone controllers around it.</p><ul><li>One central computer in place of two</li><li>Connectivity (5G, Wi-Fi, positioning) links straight to the central computer</li><li>Driver-assistance and cockpit interfaces on one ECU specification</li><li>Cockpit audio, displays and cameras brought onto the central computer's interfaces</li><li>Available as a ready-made project in SDVsolution</li></ul></div></div>
 </div></section>
 
