@@ -213,8 +213,9 @@ home = f'''<section class="hero"><div class="wrap">
   <div class="gens">
     <div class="gen"><div class="tag">Generation 1</div><h3>Driver assistance on NVIDIA DRIVE AGX Thor</h3><p>The driver-assistance ECU is built on Thor. The cockpit keeps its own computer and the zone controllers stay as they are.</p></div>
     <div class="gen"><div class="tag">Generation 2</div><h3>Driver assistance and cockpit on one Thor</h3><p>Both run on a single Thor-based central computer, with the zone controllers around it.</p></div>
+    <div class="gen"><div class="tag">Generation 3</div><h3>Zone control on the same Thor</h3><p>The central computer also runs the zone control logic. The zone controllers become zonal aggregators on two Ethernet links each.</p></div>
   </div>
-  <p style="margin-top:34px"><a class="more" href="nvidia-drive.html" {NEW}>See both architectures in detail</a></p>
+  <p style="margin-top:34px"><a class="more" href="nvidia-drive.html" {NEW}>See the three architectures in detail</a></p>
   <p class="legal">NVIDIA and NVIDIA DRIVE are trademarks of NVIDIA Corporation. SDVsolution is an independent company and is not affiliated with, sponsored by or endorsed by NVIDIA.</p>
 </div></section>
 
@@ -331,6 +332,16 @@ def gen_svg(two):
     zones = f'''<path class="d-wire d-can" d="M170 292V320M470 292V320"/>
   {box(90, 240, 160, 52, "Front zone")}{box(380, 240, 180, 52, "Center zone")}
   <g class="d-s" text-anchor="middle"><text x="170" y="338">climate, chassis</text><text x="470" y="338">body, energy: doors, seats, lighting, tailgate</text></g>'''
+    if two == 3:
+        return f'''<svg viewBox="0 0 640 370" role="img" aria-label="Generation 3: a connectivity unit above one Thor-based central computer for driver assistance, cockpit and zone control. The central computer connects by two Ethernet links each to the front zonal aggregator and the center zonal aggregator, and to the cameras, radars and ultrasonic sensors.">
+  <path class="d-wire d-eth" d="M320 66V100M170 128H210M300 156V196H164V240M312 156V204H176V240M340 156V196H476V240M328 156V204H464V240"/>
+  <path class="d-wire d-can" d="M170 292V320M470 292V320"/>
+  {box(230, 20, 180, 46, "Connectivity", "5G, Wi-Fi, positioning")}
+  {box(190, 100, 260, 56, "NVIDIA DRIVE AGX Thor", "driver assistance + cockpit + zone control", True)}
+  {box(20, 100, 150, 56, "Cameras, radars", "ultrasonic sensors")}
+  {box(70, 240, 200, 52, "Front zonal aggregator")}{box(370, 240, 200, 52, "Center zonal aggregator")}
+  <g class="d-s" text-anchor="middle"><text x="170" y="338">climate, chassis</text><text x="470" y="338">body, energy: doors, seats, lighting, tailgate</text></g>
+</svg>'''
     if two:
         return f'''<svg viewBox="0 0 640 370" role="img" aria-label="Generation 2: a connectivity unit above one Thor-based central computer for driver assistance and cockpit. The central computer connects by Ethernet to the front zone and the center zone, and to the cameras, radars and ultrasonic sensors.">
   <path class="d-wire d-eth" d="M320 66V100M320 156V200M320 200H170V240M320 200H470V240M170 128H210"/>
@@ -348,10 +359,11 @@ def gen_svg(two):
   {zones}
 </svg>'''
 
-nvidia = phero("NVIDIA DRIVE", "The vehicle around NVIDIA DRIVE AGX Thor.", "Choosing the central computer is one decision. Connecting it to the dozens of other ECUs in the vehicle is the larger job. SDVsolution models that vehicle for you, in two ready-made architectures.") + f'''
+nvidia = phero("NVIDIA DRIVE", "The vehicle around NVIDIA DRIVE AGX Thor.", "Choosing the central computer is one decision. Connecting it to the dozens of other ECUs in the vehicle is the larger job. SDVsolution models that vehicle for you, in three ready-made architectures.") + f'''
 <section class="band band-black"><div class="wrap">
   <div class="row"><figure class="art">{gen_svg(False)}<figcaption>Generation 1</figcaption></figure><div><h3>Generation 1: driver assistance on Thor</h3><p>The driver-assistance ECU is built on NVIDIA DRIVE AGX Thor. The cockpit keeps its own computer and the zone controllers stay as they are.</p><ul><li>The lowest-change path onto NVIDIA DRIVE</li><li>The cockpit computer stays at the center, on Ethernet with the front zone, the center zone and Thor</li><li>Connectivity (5G, Wi-Fi, positioning) stays on the cockpit computer</li><li>Driver-assistance interfaces, cameras, radars and ultrasonic sensors modeled</li><li>Available as a ready-made project in SDVsolution</li></ul></div></div>
   <div class="row flip"><figure class="art">{gen_svg(True)}<figcaption>Generation 2</figcaption></figure><div><h3>Generation 2: driver assistance and cockpit on one Thor</h3><p>Both functions run on a single Thor-based central computer, with the zone controllers around it.</p><ul><li>One central computer in place of two</li><li>Connectivity (5G, Wi-Fi, positioning) links straight to the central computer</li><li>Driver-assistance and cockpit interfaces on one ECU specification</li><li>Cockpit audio, displays and cameras brought onto the central computer's interfaces</li><li>Available as a ready-made project in SDVsolution</li></ul></div></div>
+  <div class="row"><figure class="art">{gen_svg(3)}<figcaption>Generation 3</figcaption></figure><div><h3>Generation 3: zone control on the same Thor</h3><p>The central computer also runs the control logic of the zones. The two zone controllers become zonal aggregators.</p><ul><li>All zone control logic runs on the central computer</li><li>The aggregators convert sensor and actuator signals and distribute power, and run no control logic</li><li>Two Ethernet links from each aggregator to the central computer</li><li>Each aggregator keeps a small fixed safe-state function and the wake supervision</li><li>Door, seat, brake, steering, airbag and battery units stay as separate ECUs</li><li>Available as a ready-made project in SDVsolution</li></ul></div></div>
 </div></section>
 
 <section class="band on-paper"><div class="wrap">
@@ -368,7 +380,7 @@ nvidia = phero("NVIDIA DRIVE", "The vehicle around NVIDIA DRIVE AGX Thor.", "Cho
   <div class="head"><h2>Does the hardware cover the vehicle?</h2><p class="lead">Before you commit to an architecture, the platform compares what the vehicle needs from its central computer with the interfaces the hardware provides, line by line.</p></div>
   <div class="scroll"><table class="tbl">
     <tr><th>What is compared</th><th>Why it matters</th></tr>
-    <tr><td>Camera and display links</td><td>Whether every camera and display in the vehicle has a port, in both generations</td></tr>
+    <tr><td>Camera and display links</td><td>Whether every camera and display in the vehicle has a port, in all three generations</td></tr>
     <tr><td>Ethernet, CAN and LIN</td><td>Whether the vehicle's buses can all reach the central computer, directly or through a zone controller</td></tr>
     <tr><td>Audio</td><td>Whether the cockpit's audio buses move onto the central computer in Generation 2</td></tr>
     <tr><td>Supply and environment</td><td>Whether voltage range and temperature limits fit where the unit is mounted</td></tr>
@@ -377,7 +389,7 @@ nvidia = phero("NVIDIA DRIVE", "The vehicle around NVIDIA DRIVE AGX Thor.", "Cho
   <p class="legal">NVIDIA and NVIDIA DRIVE are trademarks of NVIDIA Corporation. SDVsolution is an independent company and is not affiliated with, sponsored by or endorsed by NVIDIA. Hardware capabilities are those published by NVIDIA; check the current NVIDIA documentation for your hardware revision.</p>
 </div></section>
 {contact("Walk through a Thor-based vehicle with us.", "We open the Generation 1 and Generation 2 projects and show you the architecture, the communication and the ECU specifications. We reply by email.")}'''
-page("nvidia-drive.html", "Built for NVIDIA DRIVE AGX Thor | SDVsolution", "SDVsolution models the vehicle around NVIDIA DRIVE AGX Thor in two ready-made architectures: driver assistance on Thor, and driver assistance and cockpit on one Thor. Architecture, communication, ECU specifications and release tracking.", nvidia)
+page("nvidia-drive.html", "Built for NVIDIA DRIVE AGX Thor | SDVsolution", "SDVsolution models the vehicle around NVIDIA DRIVE AGX Thor in three ready-made architectures: driver assistance on Thor, driver assistance and cockpit on one Thor, and zone control on the same Thor with zonal aggregators. Architecture, communication, ECU specifications and release tracking.", nvidia)
 
 # ------------------------------------------------------------------ solutions
 solutions = phero("Solutions and plans", "Two ways to work with us, at four sizes.", "Hand us the vehicle side and receive the software, or license the platform and keep the engineering in your own team. Either way, you choose how much of the vehicle it covers.") + f'''
@@ -402,7 +414,7 @@ solutions = phero("Solutions and plans", "Two ways to work with us, at four size
   <div class="head"><h2>Start with the demo. License what you need.</h2><p class="lead">We show you the demo and give your team access by email. When you are ready, we scope a license to your program and price it by quote.</p></div>
   <div class="plans">
     <div class="plan"><h3>Demo</h3><div class="amt">Free</div><div class="per">by request, access by email</div><ul><li>A walkthrough with our team</li><li>Then access for your team, by email</li><li>A sample feature from system requirement to software and hardware</li><li>Four door modules to explore</li></ul><a class="btn btn-line" href="#demo">Request a demo</a></div>
-    <div class="plan"><h3>Custom</h3><div class="amt">By quote</div><div class="per">scoped to your program</div><ul><li>Feature, ECU, domain or complete-vehicle scope</li><li>Full-stack integration or a tool license</li><li>NVIDIA DRIVE AGX Thor architectures, Generation 1 and 2</li><li>Communication matrix, ARXML, DBC, LDF and connector pin-outs</li><li>Integrations with the requirements tools you already use</li><li>Single sign-on, access controls, audit trail and assessment support</li></ul><a class="btn btn-lime" href="#demo">Get a quote</a></div>
+    <div class="plan"><h3>Custom</h3><div class="amt">By quote</div><div class="per">scoped to your program</div><ul><li>Feature, ECU, domain or complete-vehicle scope</li><li>Full-stack integration or a tool license</li><li>NVIDIA DRIVE AGX Thor architectures, Generation 1, 2 and 3</li><li>Communication matrix, ARXML, DBC, LDF and connector pin-outs</li><li>Integrations with the requirements tools you already use</li><li>Single sign-on, access controls, audit trail and assessment support</li></ul><a class="btn btn-lime" href="#demo">Get a quote</a></div>
   </div>
 </div></section>
 

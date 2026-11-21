@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Built for NVIDIA DRIVE AGX Thor | SDVsolution</title>
-<meta name="description" content="SDVsolution models the vehicle around NVIDIA DRIVE AGX Thor in two ready-made architectures: driver assistance on Thor, and driver assistance and cockpit on one Thor. Architecture, communication, ECU specifications and release tracking." />
+<meta name="description" content="SDVsolution models the vehicle around NVIDIA DRIVE AGX Thor in three ready-made architectures: driver assistance on Thor, driver assistance and cockpit on one Thor, and zone control on the same Thor with zonal aggregators. Architecture, communication, ECU specifications and release tracking." />
 <link rel="preload" href="assets/fonts/barlow-condensed-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
 <link rel="stylesheet" href="assets/site.css" />
@@ -16,7 +16,7 @@
   <div class="nav-cta"><a class="login" href="https://app.sdvsolution.com" >Log in</a><a class="btn btn-lime" href="#demo">Request a demo</a></div>
 </div></header>
 <a id="top"></a>
-<section class="phero"><div class="wrap"><p class="crumb"><a href="index.html" >SDVsolution</a> / NVIDIA DRIVE</p><h1>The vehicle around NVIDIA DRIVE AGX Thor.</h1><p class="lead">Choosing the central computer is one decision. Connecting it to the dozens of other ECUs in the vehicle is the larger job. SDVsolution models that vehicle for you, in two ready-made architectures.</p></div></section>
+<section class="phero"><div class="wrap"><p class="crumb"><a href="index.html" >SDVsolution</a> / NVIDIA DRIVE</p><h1>The vehicle around NVIDIA DRIVE AGX Thor.</h1><p class="lead">Choosing the central computer is one decision. Connecting it to the dozens of other ECUs in the vehicle is the larger job. SDVsolution models that vehicle for you, in three ready-made architectures.</p></div></section>
 <section class="band band-black"><div class="wrap">
   <div class="row"><figure class="art"><svg viewBox="0 0 640 370" role="img" aria-label="Generation 1: the cockpit computer in the center, with a connectivity unit above it. The cockpit computer connects by Ethernet to the front zone, the center zone and the Thor-based driver-assistance computer, which has the cameras, radars and ultrasonic sensors.">
   <path class="d-wire d-eth" d="M320 66V100M320 156V200M320 200H170V240M320 200H470V240M430 128H460M540 66V100"/>
@@ -37,6 +37,15 @@
   <rect class="d-box" x="90" y="240" width="160" height="52"/><text class="d-t" x="170.0" y="271.0" text-anchor="middle">Front zone</text><rect class="d-box" x="380" y="240" width="180" height="52"/><text class="d-t" x="470.0" y="271.0" text-anchor="middle">Center zone</text>
   <g class="d-s" text-anchor="middle"><text x="170" y="338">climate, chassis</text><text x="470" y="338">body, energy: doors, seats, lighting, tailgate</text></g>
 </svg><figcaption>Generation 2</figcaption></figure><div><h3>Generation 2: driver assistance and cockpit on one Thor</h3><p>Both functions run on a single Thor-based central computer, with the zone controllers around it.</p><ul><li>One central computer in place of two</li><li>Connectivity (5G, Wi-Fi, positioning) links straight to the central computer</li><li>Driver-assistance and cockpit interfaces on one ECU specification</li><li>Cockpit audio, displays and cameras brought onto the central computer's interfaces</li><li>Available as a ready-made project in SDVsolution</li></ul></div></div>
+  <div class="row"><figure class="art"><svg viewBox="0 0 640 370" role="img" aria-label="Generation 3: a connectivity unit above one Thor-based central computer for driver assistance, cockpit and zone control. The central computer connects by two Ethernet links each to the front zonal aggregator and the center zonal aggregator, and to the cameras, radars and ultrasonic sensors.">
+  <path class="d-wire d-eth" d="M320 66V100M170 128H210M300 156V196H164V240M312 156V204H176V240M340 156V196H476V240M328 156V204H464V240"/>
+  <path class="d-wire d-can" d="M170 292V320M470 292V320"/>
+  <rect class="d-box" x="230" y="20" width="180" height="46"/><text class="d-t" x="320.0" y="41.0" text-anchor="middle">Connectivity</text><text class="d-s" x="320.0" y="57.0" text-anchor="middle">5G, Wi-Fi, positioning</text>
+  <rect class="d-core" x="190" y="100" width="260" height="56"/><text class="d-t" x="320.0" y="126.0" text-anchor="middle">NVIDIA DRIVE AGX Thor</text><text class="d-s" x="320.0" y="142.0" text-anchor="middle">driver assistance + cockpit + zone control</text>
+  <rect class="d-box" x="20" y="100" width="150" height="56"/><text class="d-t" x="95.0" y="126.0" text-anchor="middle">Cameras, radars</text><text class="d-s" x="95.0" y="142.0" text-anchor="middle">ultrasonic sensors</text>
+  <rect class="d-box" x="70" y="240" width="200" height="52"/><text class="d-t" x="170.0" y="271.0" text-anchor="middle">Front zonal aggregator</text><rect class="d-box" x="370" y="240" width="200" height="52"/><text class="d-t" x="470.0" y="271.0" text-anchor="middle">Center zonal aggregator</text>
+  <g class="d-s" text-anchor="middle"><text x="170" y="338">climate, chassis</text><text x="470" y="338">body, energy: doors, seats, lighting, tailgate</text></g>
+</svg><figcaption>Generation 3</figcaption></figure><div><h3>Generation 3: zone control on the same Thor</h3><p>The central computer also runs the control logic of the zones. The two zone controllers become zonal aggregators.</p><ul><li>All zone control logic runs on the central computer</li><li>The aggregators convert sensor and actuator signals and distribute power, and run no control logic</li><li>Two Ethernet links from each aggregator to the central computer</li><li>Each aggregator keeps a small fixed safe-state function and the wake supervision</li><li>Door, seat, brake, steering, airbag and battery units stay as separate ECUs</li><li>Available as a ready-made project in SDVsolution</li></ul></div></div>
 </div></section>
 
 <section class="band on-paper"><div class="wrap">
@@ -53,7 +62,7 @@
   <div class="head"><h2>Does the hardware cover the vehicle?</h2><p class="lead">Before you commit to an architecture, the platform compares what the vehicle needs from its central computer with the interfaces the hardware provides, line by line.</p></div>
   <div class="scroll"><table class="tbl">
     <tr><th>What is compared</th><th>Why it matters</th></tr>
-    <tr><td>Camera and display links</td><td>Whether every camera and display in the vehicle has a port, in both generations</td></tr>
+    <tr><td>Camera and display links</td><td>Whether every camera and display in the vehicle has a port, in all three generations</td></tr>
     <tr><td>Ethernet, CAN and LIN</td><td>Whether the vehicle's buses can all reach the central computer, directly or through a zone controller</td></tr>
     <tr><td>Audio</td><td>Whether the cockpit's audio buses move onto the central computer in Generation 2</td></tr>
     <tr><td>Supply and environment</td><td>Whether voltage range and temperature limits fit where the unit is mounted</td></tr>
